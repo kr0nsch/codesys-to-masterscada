@@ -1,0 +1,9 @@
+{
+ "rule": "MS-TYPE-07",
+ "pos": {
+  "outcome": "verify"
+ },
+ "neg": {
+  "absent": true
+ }
+}

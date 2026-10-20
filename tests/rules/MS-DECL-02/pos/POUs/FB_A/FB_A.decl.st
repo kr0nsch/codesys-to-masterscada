@@ -1,0 +1,4 @@
+FUNCTION_BLOCK FB_A
+VAR_STAT
+    iCount : INT;
+END_VAR

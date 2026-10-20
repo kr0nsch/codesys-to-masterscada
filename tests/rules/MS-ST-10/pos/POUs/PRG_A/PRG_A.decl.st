@@ -1,0 +1,4 @@
+PROGRAM PRG_A
+VAR_INPUT
+    xStart : BOOL;
+END_VAR

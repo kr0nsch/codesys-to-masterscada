@@ -1,0 +1,9 @@
+{
+ "rule": "MS-LIB-01",
+ "pos": {
+  "outcome": "verify"
+ },
+ "neg": {
+  "absent": true
+ }
+}

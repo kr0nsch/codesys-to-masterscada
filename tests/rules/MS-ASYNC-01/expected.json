@@ -1,0 +1,9 @@
+{
+ "rule": "MS-ASYNC-01",
+ "pos": {
+  "outcome": "manual"
+ },
+ "neg": {
+  "absent": true
+ }
+}

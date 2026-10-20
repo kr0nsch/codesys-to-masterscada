@@ -1,0 +1,9 @@
+{
+ "rule": "MS-EXEC-05",
+ "pos": {
+  "outcome": "info"
+ },
+ "neg": {
+  "absent": true
+ }
+}

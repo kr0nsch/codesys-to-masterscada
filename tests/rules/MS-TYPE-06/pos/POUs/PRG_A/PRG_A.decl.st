@@ -1,0 +1,4 @@
+PROGRAM PRG_A
+VAR
+    d : DT;
+END_VAR

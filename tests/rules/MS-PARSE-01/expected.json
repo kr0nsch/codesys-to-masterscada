@@ -1,0 +1,9 @@
+{
+ "rule": "MS-PARSE-01",
+ "pos": {
+  "outcome": "manual"
+ },
+ "neg": {
+  "absent": true
+ }
+}

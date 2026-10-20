@@ -1,0 +1,5 @@
+PROGRAM PRG_A
+VAR
+    r : REAL;
+    i : INT;
+END_VAR

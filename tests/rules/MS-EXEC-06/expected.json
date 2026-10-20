@@ -1,0 +1,9 @@
+{
+ "rule": "MS-EXEC-06",
+ "pos": {
+  "outcome": "verify"
+ },
+ "neg": {
+  "absent": true
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "rule": "MS-TYPE-04",
+ "pos": {
+  "outcome": "auto"
+ },
+ "neg": {
+  "absent": true
+ }
+}

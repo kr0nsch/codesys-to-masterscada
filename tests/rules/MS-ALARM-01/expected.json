@@ -1,0 +1,5 @@
+{
+ "rule": "MS-ALARM-01",
+ "emitted": false,
+ "why": "AlarmManager не попадает в PLCopen XML — пункт MANUAL_STEPS «Не переносится»"
+}

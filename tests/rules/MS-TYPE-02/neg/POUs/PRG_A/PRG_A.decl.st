@@ -1,0 +1,4 @@
+PROGRAM PRG_A
+VAR
+    s : STRING;
+END_VAR

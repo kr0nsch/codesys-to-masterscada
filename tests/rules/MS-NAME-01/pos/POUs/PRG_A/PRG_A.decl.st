@@ -1,0 +1,5 @@
+PROGRAM PRG_A
+VAR
+    x : INT;
+    b : BOOL;
+END_VAR

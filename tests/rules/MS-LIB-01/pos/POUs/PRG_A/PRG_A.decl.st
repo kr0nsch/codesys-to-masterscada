@@ -1,0 +1,4 @@
+PROGRAM PRG_A
+VAR
+    c : CTU;
+END_VAR

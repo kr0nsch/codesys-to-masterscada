@@ -1,0 +1,9 @@
+{
+ "rule": "MS-MARK-01",
+ "pos": {
+  "outcome": "info"
+ },
+ "neg": {
+  "absent": true
+ }
+}

@@ -1,0 +1,4 @@
+PROGRAM PRG_A
+VAR
+    fb : FB_Read;
+END_VAR

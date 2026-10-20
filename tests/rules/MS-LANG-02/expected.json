@@ -1,0 +1,5 @@
+{
+ "rule": "MS-LANG-02",
+ "corpus": "corpus/udr1/source.handmade.xml",
+ "pou": "PRG_Permissives"
+}

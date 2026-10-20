@@ -1,0 +1,3 @@
+VAR_GLOBAL RETAIN
+    p : INT;
+END_VAR

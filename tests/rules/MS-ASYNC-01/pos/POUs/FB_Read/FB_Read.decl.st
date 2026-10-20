@@ -1,0 +1,4 @@
+FUNCTION_BLOCK FB_Read
+VAR_INPUT
+    xExecute : BOOL;
+END_VAR

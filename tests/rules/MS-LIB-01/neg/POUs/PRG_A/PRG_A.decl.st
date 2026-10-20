@@ -1,0 +1,4 @@
+PROGRAM PRG_A
+VAR
+    t : TON;
+END_VAR

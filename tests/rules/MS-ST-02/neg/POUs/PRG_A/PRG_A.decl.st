@@ -1,0 +1,4 @@
+PROGRAM PRG_A
+VAR
+    rLevel : REAL;
+END_VAR

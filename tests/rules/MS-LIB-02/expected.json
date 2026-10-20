@@ -1,0 +1,9 @@
+{
+ "rule": "MS-LIB-02",
+ "pos": {
+  "outcome": "manual"
+ },
+ "neg": {
+  "absent": true
+ }
+}

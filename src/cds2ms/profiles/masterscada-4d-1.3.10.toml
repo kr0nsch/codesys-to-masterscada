@@ -1,0 +1,263 @@
+# Профиль цели: MasterSCADA 4D 1.3.10 / MasterPLC (транслятор задачи Lua 5.4).
+# Статус каждой возможности — supported | unsupported | unknown, уверенность H/M/L и источник.
+# Отсутствие слова в списке ключевых слов справки не доказательство (там нет даже VAR_INPUT): такие
+# статусы — unknown. При unknown симулятор гоняет все варианты из [variants], расхождение — verify.
+# HW: = https://help.iek-digital.ru/Help-web/
+
+[profile]
+id = "masterscada-4d-1.3.10"
+title = "MasterSCADA 4D 1.3.10 / MasterPLC"
+version = "1.3.10"
+date = "2026-10-20"
+help = "https://help.iek-digital.ru/Help-web/"
+local_install = "MasterSCADA 4D 1.3.10 Demo (1.3.10.35699) — сборка скрипта против MasterSCADA.Scripts.Model.dll проверена локально; импорт и «Проверить» — у владельца (docs/HARDWARE_VALIDATION.md)"
+
+[semantics]
+task_period_default_ms = 100
+task_priority_default = 100
+dt_default = "DT#0001-01-01-00:00:00"
+string_model = "utf8-unbounded"
+sfc_qualifiers = ["N", "P1"]
+sfc_n = "skip_first_plus_after"
+array_oob = "null"
+max_array_dims = 3
+int_overflow = "unknown"
+real_arith = "unknown"
+real_as_lreal = false
+real_to_int_half = "unknown"
+div_zero = "unknown"
+time_bits = "unknown"
+time_signed = true
+for_bounds = "unknown"
+
+# Варианты для unknown: первый — базовый прогон симулятора, остальные — альтернативы (один фактор за раз).
+[variants]
+int_overflow = ["wrap", "int64", "float64"]
+real_arith = ["float64", "float32"]
+real_to_int_half = ["away", "even"]
+div_zero = ["zero", "error"]
+time_bits = ["64", "32"]
+for_bounds = ["once", "each"]
+
+[features.ST]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/programmirovanie_v_masterscada_4d.html"
+
+[features.FBD]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/programmirovanie_v_masterscada_4d.html"
+note = "свободная расстановка; порядок по потоку данных или геометрии (HW:poryadok_ispolnenia_fbd-blokov)"
+
+[features.LD]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/redaktor_ld.html"
+note = "ФБ на цепи: in = En (HW:ld-blok); API скриптов для LD «будет добавлено позже»"
+
+[features.SFC]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/redaktor_sfc.html"
+note = "только N и P1 «со сдвигом на один цикл» (HW:dialog_redaktirovaniya_sfc-deystviya)"
+
+[features.IL]
+status = "unsupported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/programmirovanie_v_masterscada_4d.html"
+note = "в перечне языков нет IL"
+
+[features.CFC]
+status = "unsupported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/programmirovanie_v_masterscada_4d.html"
+note = "в перечне языков нет CFC"
+
+[features.PLCOPEN_IMPORT]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/-plcopenxml.html"
+note = "только ST: типы, ФБ и функции → локальная библиотека; программы и глобальные параметры → узел; namespace, размещение globalVars, addData не описаны"
+
+[features.ST_FILE]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/export_i_import_programm_st.html"
+note = "формат файла .ST не описан"
+
+[features.CSHARP_SCRIPT]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/script_c.html"
+note = "DoAction(), this.RootItemModel; только в среде разработки"
+
+[features.EN_IN_ST]
+status = "unsupported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/obrabotka_en_eno.html"
+
+[features.VAR_IN_OUT]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/osnovnye_tipy_obavleniy.html"
+note = "секция var_inout; ссылочная ли передача — не описано"
+
+[features.VAR_TEMP]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/osnovnye_tipy_obavleniy.html"
+
+[features.VAR_STAT]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/osnovnye_tipy_obavleniy.html"
+note = "в перечне секций нет"
+
+[features.VAR_GLOBAL]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/globalnye_peremennye.html"
+note = "глобальные — параметры узла, в ST без объявления"
+
+[features.CONSTANT]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/modifikatory_operatorov_opredeleniya_peremennyh.html"
+
+[features.RETAIN]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/sohranenie_sostoyania.html"
+note = "пишется периодически или при остановке, «время актуальности»"
+
+[features.PERSISTENT]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/klyuchevye_slova.html"
+
+[features.POINTER]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/klyuchevye_slova.html"
+note = "в списке ключевых слов нет; REF_TO — не ссылка (HW:specialnye_tipy_dannyh)"
+
+[features.REFERENCE]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/specialnye_tipy_dannyh.html"
+
+[features.METHOD]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/klyuchevye_slova.html"
+
+[features.PROPERTY]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/klyuchevye_slova.html"
+
+[features.INTERFACE]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/klyuchevye_slova.html"
+
+[features.EXTENDS]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/klyuchevye_slova.html"
+note = "наследование типов ФБ в библиотеке упомянуто (HW:programmirovanie_v_masterscada_4d), синтаксис EXTENDS не описан"
+
+[features.UNION]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/noviy_tip_parametra.html"
+note = "типы библиотеки: массив, перечисление, диапазон, структура"
+
+[features.ARRAY_DIMS]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/redaktor_tipa_massiv.html"
+note = "не больше трёх осей; нет индекса → NULL"
+
+[features.LTIME]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/elementarnye_tipy_dannyh.html"
+
+[features.WSTRING]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/elementarnye_tipy_dannyh.html"
+note = "литерал WSTRING# есть, типа в списке нет"
+
+[features.STRING_N]
+status = "unknown"
+confidence = "M"
+source = "https://iek-digital.ru/products/release-history/"
+note = "строки переменной длины в UTF-8 (1.3.4)"
+
+[features.CASE_ENUM]
+status = "unknown"
+confidence = "L"
+source = "https://help.iek-digital.ru/Help-web/operator_case.html"
+
+[features.JMP]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/operatory_master_st.html"
+note = "в перечне операторов нет"
+
+[features.CONTINUE]
+status = "supported"
+confidence = "H"
+source = "https://iek-digital.ru/products/release-history/"
+note = "с 1.3.6"
+
+[features.TASK_EVENT]
+status = "unknown"
+confidence = "M"
+source = "https://help.iek-digital.ru/Help-web/zadachi.html"
+note = "на странице задач событийные не упомянуты"
+
+[features.TASK_CYCLIC]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/zadachi.html"
+
+[features.DT_DEFAULT]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/inicializaciya_peremennyh.html"
+note = "по умолчанию DT#0001-01-01-00:00:00"
+
+[features.INT_OVERFLOW]
+status = "unknown"
+confidence = "L"
+source = "https://help.iek-digital.ru/Help-web/osobennosti_bitovyh_strok.html"
+note = "перенос описан только для BYTE/WORD/DWORD/LWORD"
+
+[features.REAL_TO_INT]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/funkcii_preobrazovaniya_tipa.html"
+note = "округление; способ на половинах не описан"
+
+[features.TIME_SIGNED]
+status = "supported"
+confidence = "H"
+source = "https://help.iek-digital.ru/Help-web/vremennye_konstanty.html"
+note = "отрицательные интервалы в литералах; разрядность не описана"
+
+[names]
+# ключевые слова Master ST, которых нет в CODESYS (HW:klyuchevye_slova)
+keywords = ["NULL", "R_EDGE", "F_EDGE", "READ_ONLY", "READ_WRITE", "WITH", "TASK", "RESOURCE", "STEP", "INITIAL_STEP", "TRANSITION", "EN", "ENO"]
+# слова Lua 5.4, которых нет в ST (https://www.lua.org/manual/5.4/manual.html#3.1)
+lua = ["local", "nil", "end", "goto", "until", "then", "elseif", "repeat", "function", "in", "break"]
+identifier_rules = "https://help.iek-digital.ru/Help-web/identifikatory.html"
+
+[libraries]
+# по оглавлению справки (HW:hmcontent): «Стандартная», подмножество OSCAT, BaseObjects
+standard_fbs = ["TON", "TOF", "TP", "R_TRIG", "F_TRIG", "RS", "SR", "CTU", "CTD", "CTUD", "CTU_DINT", "CTD_DINT", "CTUD_DINT"]
+standard_source = "https://help.iek-digital.ru/Help-web/hmcontent.html"
+counter_pv_type = "unknown"

@@ -1,0 +1,3 @@
+VAR_GLOBAL
+    c : INT := 5;
+END_VAR

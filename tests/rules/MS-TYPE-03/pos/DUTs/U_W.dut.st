@@ -1,0 +1,6 @@
+TYPE U_W :
+UNION
+    w : WORD;
+    b : BYTE;
+END_UNION
+END_TYPE

@@ -1,0 +1,9 @@
+{
+ "rule": "MS-EXEC-02",
+ "pos": {
+  "outcome": "review"
+ },
+ "neg": {
+  "absent": true
+ }
+}

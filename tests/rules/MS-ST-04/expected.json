@@ -1,0 +1,9 @@
+{
+ "rule": "MS-ST-04",
+ "pos": {
+  "outcome": "verify"
+ },
+ "neg": {
+  "absent": true
+ }
+}

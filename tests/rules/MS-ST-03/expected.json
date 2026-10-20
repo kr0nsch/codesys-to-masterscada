@@ -1,0 +1,7 @@
+{
+ "rule": "MS-ST-03",
+ "pos": {
+  "outcome": "auto"
+ },
+ "neg": null
+}

@@ -1,0 +1,9 @@
+{
+ "rule": "MS-ST-12",
+ "pos": {
+  "outcome": "manual"
+ },
+ "neg": {
+  "absent": true
+ }
+}

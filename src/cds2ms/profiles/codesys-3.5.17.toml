@@ -1,0 +1,30 @@
+# Профиль источника: CODESYS V3.5 SP17 Patch 3 (3.5.17.30, сборка ОВЕН) — семантика для симулятора.
+# CDS: = https://content.helpme-codesys.com/en/CODESYS%20Development%20System/
+
+[profile]
+id = "codesys-3.5.17"
+title = "CODESYS V3.5 SP17 Patch 3"
+version = "3.5.17.30"
+date = "2026-10-20"
+help = "https://content.helpme-codesys.com/en/CODESYS%20Development%20System/"
+
+[semantics]
+dt_default = "DT#1970-01-01-00:00:00"
+string_model = "bytes-bounded"
+string_default_length = 80
+int_overflow = "wrap"
+real_arith = "float32"
+real_to_int_half = "away"
+div_zero = "error"
+time_bits = "32"
+time_signed = false
+for_bounds = "each"
+array_oob = "error"
+sfc_qualifiers = ["N", "R", "S", "L", "D", "P", "SD", "DS", "SL", "P0", "P1"]
+
+[sources]
+time = "https://content.helpme-codesys.com/en/CODESYS%20Development%20System/_cds_datatype_time.html"
+real_to = "https://content.helpme-codesys.com/en/CODESYS%20Development%20System/_cds_operator_real_to.html"
+string = "https://content.helpme-codesys.com/en/CODESYS%20Development%20System/_cds_datatype_string.html"
+sfc = "https://content.helpme-codesys.com/en/CODESYS%20SFC/_cds_sfc_sequence_of_processing.html"
+tasks = "https://content.helpme-codesys.com/en/CODESYS%20Development%20System/_cds_f_task_configuration.html"

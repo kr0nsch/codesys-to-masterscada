@@ -1,0 +1,9 @@
+{
+ "rule": "MS-ST-08",
+ "pos": {
+  "outcome": "auto"
+ },
+ "neg": {
+  "absent": true
+ }
+}

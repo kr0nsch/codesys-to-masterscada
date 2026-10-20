@@ -1,0 +1,9 @@
+{
+ "rule": "MS-TYPE-06",
+ "pos": {
+  "outcome": "review"
+ },
+ "neg": {
+  "absent": true
+ }
+}

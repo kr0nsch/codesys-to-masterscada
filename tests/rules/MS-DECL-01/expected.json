@@ -1,0 +1,9 @@
+{
+ "rule": "MS-DECL-01",
+ "pos": {
+  "outcome": "verify"
+ },
+ "neg": {
+  "absent": true
+ }
+}

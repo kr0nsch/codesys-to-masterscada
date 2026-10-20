@@ -1,0 +1,1 @@
+TYPE T_P : INT(0..100); END_TYPE

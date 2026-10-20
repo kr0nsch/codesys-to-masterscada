@@ -1,0 +1,4 @@
+PROGRAM PRG_A
+VAR
+    Step : INT;
+END_VAR

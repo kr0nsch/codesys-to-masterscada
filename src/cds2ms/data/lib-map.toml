@@ -1,0 +1,19 @@
+# Замены библиотечных POU CODESYS для MasterSCADA 4D 1.3.10 (MS-LIB-01/02).
+# status: same — есть одноимённый в «Стандартной» MS4D; manual — замены нет, заглушка и ручной шаг.
+# Источник по MS4D — оглавление справки (HW:hmcontent): «Стандартная», подмножество OSCAT, BaseObjects.
+# Совпадение имени не доказывает совпадение пинов и типов — у same с verify пины сверить пробой.
+
+[standard]
+source = "https://help.iek-digital.ru/Help-web/hmcontent.html"
+same = ["TON", "TOF", "TP", "R_TRIG", "F_TRIG", "RS", "SR"]
+verify = ["CTU", "CTD", "CTUD"]
+verify_note = "в CODESYS PV/CV — WORD, в MS4D есть отдельные *_DINT; типы пинов в справке не сверены"
+
+[util]
+source = "https://content.helpme-codesys.com/en/libs/Util/Current/index.html"
+manual = ["HYSTERESIS", "LIMITALARM", "BLINK", "PID", "PID_FIXCYCLE", "PD", "HYSTERESIS_INT", "RAMP_INT", "RAMP_REAL", "DERIVATIVE", "INTEGRAL", "LIN_TRAFO", "STATISTICS_INT", "STATISTICS_REAL", "VARIANCE", "CHARCURVE", "GEN", "BCD_TO_INT", "INT_TO_BCD"]
+note = "в OSCAT MS4D есть близкие блоки (HYST, LINEAR_INT …), но пины другие — замена вручную"
+
+[caa]
+prefixes = ["CAA", "SysFile", "SysTime", "SysMem", "SysCom", "SysSocket", "SysProc", "CmpOwen", "Owen"]
+note = "асинхронные и системные блоки — вручную (MS-ASYNC-01 / MS-LIB-02)"

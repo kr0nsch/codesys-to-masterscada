@@ -1,0 +1,9 @@
+{
+ "rule": "MS-ST-07",
+ "pos": {
+  "outcome": "review"
+ },
+ "neg": {
+  "absent": true
+ }
+}

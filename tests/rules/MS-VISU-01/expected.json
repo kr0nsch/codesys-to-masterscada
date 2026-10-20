@@ -1,0 +1,5 @@
+{
+ "rule": "MS-VISU-01",
+ "emitted": false,
+ "why": "визуализация не попадает в PLCopen XML — пункт MANUAL_STEPS «Не переносится»"
+}

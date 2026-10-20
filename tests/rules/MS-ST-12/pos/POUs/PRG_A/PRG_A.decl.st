@@ -1,0 +1,5 @@
+PROGRAM PRG_A
+VAR
+    r : REFERENCE TO INT;
+    x : INT;
+END_VAR

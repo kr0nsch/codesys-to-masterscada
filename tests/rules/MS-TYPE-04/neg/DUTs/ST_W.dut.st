@@ -1,0 +1,5 @@
+TYPE ST_W :
+STRUCT
+    w : WORD;
+END_STRUCT
+END_TYPE

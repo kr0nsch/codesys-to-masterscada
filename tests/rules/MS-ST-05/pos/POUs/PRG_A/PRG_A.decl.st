@@ -1,0 +1,5 @@
+PROGRAM PRG_A
+VAR
+    p : POINTER TO INT;
+    x : INT;
+END_VAR

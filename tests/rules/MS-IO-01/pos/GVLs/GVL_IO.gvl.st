@@ -1,0 +1,3 @@
+VAR_GLOBAL
+    q AT %QX0.0 : BOOL;
+END_VAR

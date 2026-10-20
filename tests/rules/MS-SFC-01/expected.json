@@ -1,0 +1,5 @@
+{
+ "rule": "MS-SFC-01",
+ "corpus": "corpus/udr1/source.handmade.xml",
+ "pou": "PRG_FillSeq"
+}

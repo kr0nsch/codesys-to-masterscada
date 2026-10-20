@@ -1,0 +1,5 @@
+FUNCTION_BLOCK FB_A
+VAR
+    x : INT;
+    b : BOOL;
+END_VAR

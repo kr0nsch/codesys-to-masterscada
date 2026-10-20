@@ -1,0 +1,10 @@
+{
+ "rule": "MS-TYPE-05",
+ "pos": {
+  "outcome": "review"
+ },
+ "neg": {
+  "absent": true
+ },
+ "match_outcome": true
+}

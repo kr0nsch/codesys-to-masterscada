@@ -1,0 +1,9 @@
+{
+ "rule": "MS-DECL-02",
+ "pos": {
+  "outcome": "review"
+ },
+ "neg": {
+  "absent": true
+ }
+}

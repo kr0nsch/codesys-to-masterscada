@@ -1,0 +1,4 @@
+PROGRAM PRG_A
+VAR
+    d : DT := DT#2020-01-01-00:00:00;
+END_VAR

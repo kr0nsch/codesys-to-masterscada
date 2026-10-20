@@ -1,0 +1,4 @@
+PROGRAM PRG_A
+VAR_INPUT
+    iMode : INT;
+END_VAR

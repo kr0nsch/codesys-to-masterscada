@@ -1,0 +1,9 @@
+{
+ "rule": "MS-SFC-02",
+ "pos": {
+  "outcome": "manual"
+ },
+ "neg": {
+  "absent": true
+ }
+}

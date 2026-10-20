@@ -1,0 +1,5 @@
+{
+ "rule": "MS-LANG-03",
+ "corpus": "corpus/udr1/source.handmade.xml",
+ "pou": "FB_DoseCtrl"
+}

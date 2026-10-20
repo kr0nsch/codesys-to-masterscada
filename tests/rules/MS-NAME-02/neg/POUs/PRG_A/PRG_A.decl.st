@@ -1,0 +1,4 @@
+PROGRAM PRG_A
+VAR
+    iStep : INT;
+END_VAR

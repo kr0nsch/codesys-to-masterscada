@@ -1,0 +1,9 @@
+{
+ "rule": "MS-ST-10",
+ "pos": {
+  "outcome": "info"
+ },
+ "neg": {
+  "absent": true
+ }
+}

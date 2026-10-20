@@ -1,0 +1,9 @@
+{
+ "rule": "MS-RET-02",
+ "pos": {
+  "outcome": "verify"
+ },
+ "neg": {
+  "absent": true
+ }
+}

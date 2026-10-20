@@ -1,0 +1,7 @@
+FUNCTION_BLOCK FB_A
+VAR_INPUT
+    xEnable : BOOL;
+END_VAR
+VAR
+    x : INT;
+END_VAR

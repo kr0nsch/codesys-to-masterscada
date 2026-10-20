@@ -1,0 +1,3 @@
+VAR_GLOBAL
+    g : INT;
+END_VAR

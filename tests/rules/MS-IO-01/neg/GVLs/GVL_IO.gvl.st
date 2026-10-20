@@ -1,0 +1,3 @@
+VAR_GLOBAL
+    q : BOOL;
+END_VAR

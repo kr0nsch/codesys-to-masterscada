@@ -1,0 +1,9 @@
+{
+ "rule": "MS-RET-01",
+ "pos": {
+  "outcome": "info"
+ },
+ "neg": {
+  "absent": true
+ }
+}

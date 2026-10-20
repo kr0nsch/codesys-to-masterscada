@@ -1,0 +1,9 @@
+{
+ "rule": "MS-NAME-01",
+ "pos": {
+  "outcome": "review"
+ },
+ "neg": {
+  "absent": true
+ }
+}

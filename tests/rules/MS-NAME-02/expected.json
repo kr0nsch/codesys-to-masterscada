@@ -1,0 +1,9 @@
+{
+ "rule": "MS-NAME-02",
+ "pos": {
+  "outcome": "auto"
+ },
+ "neg": {
+  "absent": true
+ }
+}

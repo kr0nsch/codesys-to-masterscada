@@ -1,0 +1,6 @@
+{
+ "rule": "MS-LANG-07",
+ "pos": null,
+ "neg": null,
+ "note": "действия есть только в PLCopen XML: корпус УДР-1 (SFC) и тесты test_lower"
+}

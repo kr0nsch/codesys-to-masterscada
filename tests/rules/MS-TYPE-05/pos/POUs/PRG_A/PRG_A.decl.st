@@ -1,0 +1,4 @@
+PROGRAM PRG_A
+VAR
+    a : ARRAY[0..1, 0..1, 0..1, 0..1] OF INT;
+END_VAR
