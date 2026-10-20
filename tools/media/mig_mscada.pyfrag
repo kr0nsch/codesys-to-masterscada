@@ -1,0 +1,53 @@
+def mig_mscada(g: G) -> None:
+    """Перенос CODESYS -> MasterSCADA 4D (codesys-to-masterscada): ФБ CODESYS с пинами слева (было),
+    объектное дерево MasterSCADA 4D справа (стало): узел ПЛК, диспетчер задачи и объекты-экземпляры ФБ.
+
+    Внизу справа — доли исходов корпуса УДР-1 (экспорт CODESYS, `cds2ms analyze`, 20.10.2026):
+    auto 9, review 31, verify 8, manual 4.
+    """
+    t = g.t
+    # было: проект CODESYS (приглушён — исходник): блок ФБ с входами и выходами
+    _window(g, 6, 34, 150, 186, "CODESYS 3.5", dim=True)
+    g.rect(40, 74, 82, 92, 4, t["line"], t["surface_2"], 1.6)
+    g.text("FB_DoseCtrl", 81, 92, "mono_semibold", LABEL["minor"], t["text"], "middle")
+    for i, lab in enumerate(("xEnable", "rSp", "rPv")):
+        y = 112 + i * 18
+        g.line(24, y, 40, y, t["line_dim"], 1.4)
+        g.text(lab, 45, y + 3.5, "mono", LABEL["minor"], t["text_dim"])
+    for i, lab in enumerate(("rOut", "rErr")):
+        y = 121 + i * 22
+        g.line(122, y, 138, y, t["line_dim"], 1.4)
+        g.text(lab, 117, y + 3.5, "mono", LABEL["minor"], t["text_dim"], "end")
+    g.text("ST LD FBD CFC SFC IL", 81, 196, "mono", LABEL["minor"], t["text_dim"], "middle")
+    # стрелка переноса
+    g.path("M162 110H184", t["accent"], 3, cls="flow", cap="butt")
+    g.arrow_head(193, 110, 0, 9, t["accent"])
+    g.text("cds2ms", 178, 96, "mono_semibold", LABEL["label"], t["accent"], "middle")
+    # стало: дерево «Система» MasterSCADA 4D
+    _window(g, 202, 14, 192, 132, "MasterSCADA 4D", accent=True)
+    rows = [(0, "Система", "line", False), (1, "PLC210", "accent", True), (2, "migTask_Fast", "process", False),
+            (2, "FB_DoseCtrl", "line", False), (2, "PRG_FillSeq", "line", False)]
+    for i, (lvl, lab, col, hl) in enumerate(rows):
+        x = 216 + lvl * 16
+        y = 52 + i * 18
+        if lvl:
+            g.path(f"M{x - 10} {y - 13}V{y - 3}H{x - 3}", t["line_dim"], 1.2)
+        g.rect(x, y - 8, 9, 9, 2, t[col], t["accent_soft"] if hl else t["surface_2"], 1.4)
+        g.text(lab, x + 15, y, "mono" if not hl else "mono_semibold", LABEL["minor"], t["text"] if hl else t["text_muted"])
+    # доли исходов корпуса УДР-1
+    g.rect(202, 154, 192, 76, 6, t["line"], t["surface"], 1.5)
+    g.text("исходы УДР-1", 212, 170, "mono_semibold", LABEL["title"], t["text"])
+    parts = [(9, t["process"], "auto"), (31, t["line"], "review"), (8, t["violet"], "verify"), (4, t["warn"], "manual")]
+    total = sum(n for n, _, _ in parts)
+    x = 212.0
+    for n, c, _ in parts:
+        w = 172 * n / total
+        g.rect(x, 180, w, 12, 1.5, None, c)
+        x += w
+    for i, (n, c, lab) in enumerate(parts):
+        cx = 212 + (i % 2) * 90
+        cy = 200 + (i // 2) * 15
+        g.rect(cx, cy, 8, 8, 1.5, None, c)
+        g.text(f"{lab} {n}", cx + 12, cy + 7.5, "mono", LABEL["minor"], t["text_dim"])
+    g.text("проект CODESYS", 81, 247, "mono", LABEL["label"], t["text_dim"], "middle")
+    g.text("дерево MasterSCADA + отчёт", 298, 247, "mono", LABEL["label"], t["text_dim"], "middle")

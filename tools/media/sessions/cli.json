@@ -1,0 +1,95 @@
+{
+  "title": "cmd",
+  "theme": "dark",
+  "prompt": "codesys-to-masterscada> ",
+  "steps": [
+    {
+      "cmd": "cds2ms inventory corpus\\udr1\\source.cds.xml",
+      "events": [
+        [
+          0.293,
+          "stdout",
+          "source.cds.xml: plcopen-xml, CODESYS CODESYS V3.5 SP17 Patch 3\r\n\r\nязыки: CFC 2, FBD 2, LD 2, SFC 2, ST 25\r\nPOU 16, интерфейсов 1, GVL 3, DUT 4, задач 3\r\n  F_Clamp                  function       ST   \r\n  FB_AnalogScale           functionBlock  ST   \r\n  FB_FlowTotal             functionBlock  ST   \r\n  PRG_TonQuant             program        ST   \r\n  PRG_Main                 program        ST   \r\n  PRG_OopDemo              program        ST   \r\n  FB_DeviceBase            functionBlock  ST   methods 2, properties 1\r\n  FB_DosingPump            functionBlock  ST   methods 3, properties 1\r\n  FB_LevelAlarm            functionBlock  FBD  \r\n  FB_ValveCmd              functionBlock  FBD  \r\n  PRG_Permissives          program        LD   \r\n  PRG_PumpInterlock        program        LD   \r\n  FB_DoseCtrl              functionBlock  CFC  \r\n  FB_RatioCalc             functionBlock  CFC  \r\n  PRG_FillSeq              program        SFC  actions 8\r\n  PRG_CipSeq               program        SFC  actions 4\r\n  задача TaskFast: Cyclic 10.0 мс, приоритет 1, PRG_Main, PRG_Permissives, PRG_PumpInterlock\r\n  задача TaskSlow: Cyclic 200.0 мс, приоритет 5, PRG_FillSeq, PRG_CipSeq\r\n  задача TaskAlarm: Event 20.0 мс, приоритет 3, PRG_OopDemo\r\n"
+        ]
+      ],
+      "exit_code": 0,
+      "duration": 0.307,
+      "pause": 1.2
+    },
+    {
+      "cmd": "cds2ms analyze corpus\\udr1\\source.cds.xml --top 6 --fail-on never",
+      "events": [
+        [
+          0.729,
+          "stdout",
+          "cds2ms 0.1.0: source.cds.xml → MasterSCADA 4D 1.3.10\r\n  авто 9, сверить 31, проверить 8, вручную 4, невозможно 0, сведения 11; P50 19.1 ч, P90 21.07 ч (модель)\r\n  MS-IO-01    вручную    —                    source.cds.xml               5 адресных переменных: каналы MS4D и связи — по io-binding.csv\r\n  MS-ST-05    вручную    PRG_Main             source.cds.xml:944           ADR() — работа с памятью\r\n  MS-ST-05    вручную    PRG_Main             source.cds.xml:953           POINTER TO INT: указатели и ссылки в Master ST не описаны\r\n  MS-TYPE-03  вручную    U_RawWord            source.cds.xml:5351          UNION U_RawWord — вручную\r\n  MS-RET-02   проверить  —                    source.cds.xml               RETAIN в справке — «при холодном рестарте»: поведение при Reset cold CODESYS не отображается\r\n  MS-EXEC-06  проверить  —                    source.cds.xml:32            задача TaskFast: приоритет 1 — направление шкалы MS4D не описано; Priority не записывается (ResetPriority)\r\n  … ещё 46 (без --top — все; --format md|html|json — отчёт целиком)\r\n"
+        ]
+      ],
+      "exit_code": 0,
+      "duration": 0.746,
+      "pause": 1.2
+    },
+    {
+      "cmd": "cds2ms migrate corpus\\udr1\\source.cds.xml --out out\\udr1 --fail-on never",
+      "events": [
+        [
+          0.758,
+          "stdout",
+          "cds2ms 0.1.0: source.cds.xml -> out/udr1/ (81 файлов, --fix safe)\r\n  авто 9, сверить 31, проверить 8, вручную 4, невозможно 0, сведения 11; P50 19.1 ч, P90 21.07 ч (модель)\r\n"
+        ]
+      ],
+      "exit_code": 0,
+      "duration": 0.775,
+      "pause": 1.2
+    },
+    {
+      "cmd": "cds2ms simulate corpus\\udr1\\source.cds.xml --pou PRG_TonQuant --scenario corpus\\st\\PRG_TonQuant\\scenario.csv --regime R2 --expected corpus\\st\\PRG_TonQuant\\expected-divergences.toml",
+      "events": [
+        [
+          0.916,
+          "stdout",
+          "cds2ms simulate PRG_TonQuant R2: сценариев 1, строк 12, collapsed 0\r\n  codesys против ожиданий сценария: несовпадений 0\r\n  codesys против masterplc: расхождений 3, необъяснённых 0\r\n    Ton150 строка 3 t=100 out.tEt: codesys 50, masterplc 0 — MS-EXEC-01: TON 150 мс в задаче 100 мс: вход замечен в цикле 100 мс, Q — на 300 мс вместо 200; ET квантуется периодом\r\n    Ton150 строка 5 t=200 out.xQ: codesys TRUE, masterplc FALSE — MS-EXEC-01: TON 150 мс в задаче 100 мс: вход замечен в цикле 100 мс, Q — на 300 мс вместо 200; ET квантуется периодом\r\n    Ton150 строка 5 t=200 out.tEt: codesys 150, masterplc 100 — MS-EXEC-01: TON 150 мс в задаче 100 мс: вход замечен в цикле 100 мс, Q — на 300 мс вместо 200; ET квантуется периодом\r\n"
+        ]
+      ],
+      "exit_code": 0,
+      "duration": 0.931,
+      "pause": 1.2
+    },
+    {
+      "cmd": "python tools\\csc_check.py out\\udr1 --real",
+      "events": [
+        [
+          1.928,
+          "stdout",
+          "макет: собрано (csc C# 5), дерево совпало с expected-tree.json; консоль: cds2ms: программа PRG_Main не найдена — сначала импорт PLCopen XML (шаг 3)\r\ncds2ms: программа PRG_Permissives не найдена — сначала импорт PLCopen XML (шаг 3)\r\ncds2ms: программа PRG_PumpInterlock не найдена — сначала импорт PLCopen XML (шаг 3)\r\ncds2ms: программа PRG_FillSeq не найдена — сначала импорт PLCopen XML (шаг 3)\r\ncds2ms: программа PRG_CipSeq не найдена — сначала импорт PLCopen XML (шаг 3)\r\ncds2ms: программа PRG_OopDemo не найдена — сначала импорт PLCopen XML (шаг 3)\r\ncds2ms: задач 3, создано элементов 9\r\nMasterSCADA.Scripts.Model.dll: собрано без ошибок\r\n"
+        ]
+      ],
+      "exit_code": 0,
+      "duration": 1.937,
+      "pause": 1.2
+    },
+    {
+      "cmd": "python tools\\rusty_check.py --case udr1",
+      "events": [
+        [
+          1.526,
+          "stdout",
+          "udr1: диагностик 1, ожидаемых 1, неожиданных 0, пропавших 0\r\n"
+        ]
+      ],
+      "exit_code": 0,
+      "duration": 1.541,
+      "pause": 1.2
+    }
+  ],
+  "meta": {
+    "captured_with": "term2gif.py capture",
+    "captured_at": "2026-10-20T07:50:47",
+    "shell": "cmd",
+    "cwd": "codesys-to-masterscada",
+    "columns_env": 132,
+    "host": "Windows-11-10.0.26300-SP0",
+    "mockup": false,
+    "home_redacted": true
+  }
+}
