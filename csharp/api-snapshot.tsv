@@ -1,0 +1,254 @@
+page	kind	member	signature	type	date
+item	property	BackwardLinks	BackwardLinks	IEnumerable<Item>	2026-10-20
+item	property	Childs	Childs	IEnumerable<Item>	2026-10-20
+item	property	Comment	Comment	string	2026-10-20
+item	property	Description	Description	string	2026-10-20
+item	property	ForwardLinks	ForwardLinks	IEnumerable<Item>	2026-10-20
+item	property	FullName	FullName	string	2026-10-20
+item	property	FullRefName	FullRefName	string	2026-10-20
+item	property	Id	Id	long	2026-10-20
+item	property	ItemInstance	ItemInstance	ItemInstance	2026-10-20
+item	property	ItemType	ItemType	ItemType	2026-10-20
+item	property	Name	Name	string	2026-10-20
+item	property	OrderedChilds	OrderedChilds	IEnumerable<Item>	2026-10-20
+item	property	Parent	Parent	Item	2026-10-20
+item	property	Position	Position	int	2026-10-20
+item	property	RefName	RefName	string	2026-10-20
+item	property	Tag	Tag	string	2026-10-20
+item	property	TypeName	TypeName	string	2026-10-20
+item	property	UngroupedChilds	UngroupedChilds	IEnumerable<Item>	2026-10-20
+item	property	ValueGetsItem	ValueGetsItem	Item	2026-10-20
+item	property	ValueSendItems	ValueSendItems	IEnumerable<Item>	2026-10-20
+item	method	Delete	Delete()		2026-10-20
+item	method	DeleteItemById	DeleteItemById(long)		2026-10-20
+item	method	Duplicate	Duplicate(int)		2026-10-20
+item	method	FindChildByName	FindChildByName(string)	Item	2026-10-20
+item	method	FindChildByNamePath	FindChildByNamePath(string)	Item	2026-10-20
+item	method	FindChildByRefName	FindChildByRefName(string)	Item	2026-10-20
+item	method	FindChildByRefNamePath	FindChildByRefNamePath(string)	Item	2026-10-20
+item	method	FindItemByFullName	FindItemByFullName(string)	Item	2026-10-20
+item	method	FindItemByFullRefName	FindItemByFullRefName(string)	Item	2026-10-20
+item	method	FindItemById	FindItemById(long)	Item	2026-10-20
+item	method	FindNestedChildByName	FindNestedChildByName(string)	Item	2026-10-20
+item	method	FindNestedChildByRefName	FindNestedChildByRefName(string)	Item	2026-10-20
+item	method	GetChildByName	GetChildByName(string)	Item	2026-10-20
+item	method	GetChildByNamePath	GetChildByNamePath(string)	Item	2026-10-20
+item	method	GetChildByRefName	GetChildByRefName(string)	Item	2026-10-20
+item	method	GetChildByRefNamePath	GetChildByRefNamePath(string)	Item	2026-10-20
+item	method	GetItemByFullName	GetItemByFullName(string)	Item	2026-10-20
+item	method	GetItemByFullRefName	GetItemByFullRefName(string)	Item	2026-10-20
+item	method	GetItemById	GetItemById(long)	Item	2026-10-20
+item	method	GetNestedChildByName	GetNestedChildByName(string)	Item	2026-10-20
+item	method	GetNestedChildByRefName	GetNestedChildByRefName(string)	Item	2026-10-20
+item	method	ResetComment	ResetComment()	bool	2026-10-20
+item	method	ResetDescription	ResetDescription()	bool	2026-10-20
+item	method	ResetTag	ResetTag()	bool	2026-10-20
+rootitem	property	Libraries	Libraries	LibrariesItem	2026-10-20
+rootitem	property	Objects	Objects	ObjectsItem	2026-10-20
+rootitem	property	System	System	SystemItem	2026-10-20
+systemitem	base	CommonItem			2026-10-20
+systemitem	property	Controllers	Controllers	IEnumerable<ControllerItem>	2026-10-20
+systemitem	method	AddARM	AddARM(string?)	ControllerItem	2026-10-20
+systemitem	method	AddController	AddController(string?)	ControllerItem	2026-10-20
+systemitem	method	AddServer	AddServer(string?)	ControllerItem	2026-10-20
+systemitem	method	FindController	FindController(string)	ControllerItem	2026-10-20
+objectsitem	base	CommonItem			2026-10-20
+objectsitem	method	AddFolder	AddFolder(string?)	ObjectFolder	2026-10-20
+objectsitem	method	AddObject	AddObject(string?)	ObjectItem	2026-10-20
+objectsitem	method	FindObject	FindObject(string)	ObjectItem	2026-10-20
+objectitem	base	ObjectOrTagItem			2026-10-20
+objectitem	property	Ancestor	Ancestor	ObjectItem	2026-10-20
+objectitem	property	ControllerRef	ControllerRef	ControllerItem	2026-10-20
+objectitem	property	DataArchiveRef	DataArchiveRef	ArchiveItem	2026-10-20
+objectitem	property	DisableExecution	DisableExecution	bool	2026-10-20
+objectitem	property	EventsArchiveRef	EventsArchiveRef	EventsArchiveItem	2026-10-20
+objectitem	property	ExecutePlace	ExecutePlace	ExecutePlaces	2026-10-20
+objectitem	enum	ExecutePlaces	ObjectTask,ControllerTask,ScreenTask		2026-10-20
+objectitem	property	TaskRef	TaskRef	TaskItem	2026-10-20
+objectitem	property	WindowRef	WindowRef	ViewDeclarationInObjectItem	2026-10-20
+objectitem	method	AddFolder	AddFolder(string?)	ObjectFolder	2026-10-20
+objectitem	method	AddObject	AddObject(string?)	ObjectItem	2026-10-20
+objectitem	method	AddTagBase	AddTagBase(string?)	TagItem	2026-10-20
+objectitem	method	AddTagInteger	AddTagInteger(string?)	TagInstanceItem	2026-10-20
+objectitem	method	AddTagIntegerInheritance	AddTagIntegerInheritance(string?)	TagItem	2026-10-20
+objectitem	method	AddTagLogical	AddTagLogical(string?)	TagInstanceItem	2026-10-20
+objectitem	method	AddTagLogicalInheritance	AddTagLogicalInheritance(string?)	TagItem	2026-10-20
+objectitem	method	AddTagReal	AddTagReal(string?)	TagInstanceItem	2026-10-20
+objectitem	method	AddTagRealInheritance	AddTagRealInheritance(string?)	TagItem	2026-10-20
+objectitem	method	CopyTo	CopyTo(ObjectItem)	ObjectItem	2026-10-20
+objectitem	method	FindTag	FindTag(string)	TagItem	2026-10-20
+objectitem	method	FindTagInstance	FindTagInstance(string)	TagInstanceItem	2026-10-20
+objectitem	method	FindObject	FindObject(string)	ObjectItem	2026-10-20
+objectitem	method	InsertInheritorTo	InsertInheritorTo(ObjectItem)	ObjectItem	2026-10-20
+objectitem	method	InsertInstanceTo	InsertInstanceTo(ObjectItem)	ObjectInstanceItem	2026-10-20
+objectitem	method	InsertInheritorTo	InsertInheritorTo(ObjectFolder)	ObjectItem	2026-10-20
+objectitem	method	InsertInheritorTo	InsertInheritorTo(ObjectsItem)	ObjectItem	2026-10-20
+objectitem	method	InsertInstanceTo	InsertInstanceTo(ObjectFolder)	ObjectInstanceItem	2026-10-20
+objectitem	method	InsertInstanceTo	InsertInstanceTo(ObjectsItem)	ObjectInstanceItem	2026-10-20
+objectitem	method	ResetExecutePlace	ResetExecutePlace()	bool	2026-10-20
+objectitem	method	ResetDisableExecution	ResetDisableExecution()	bool	2026-10-20
+objectortagbase	base	Item			2026-10-20
+objectortagbase	property	Parameters	Parameters	IEnumerable<ProgramParamItem>	2026-10-20
+objectortagbase	method	AddAlarm	AddAlarm(string?)	AlarmUsageItem	2026-10-20
+objectortagbase	method	AddProgramCsharp	AddProgramCsharp(string?)	ProgramCsharpItem	2026-10-20
+objectortagbase	method	AddProgramFBD	AddProgramFBD(string?)	ProgramFBDItem	2026-10-20
+objectortagbase	method	AddProgramLD	AddProgramLD(string?)	ProgramLDItem	2026-10-20
+objectortagbase	method	AddProgramSFC	AddProgramSFC(string?)	ProgramSFCItem	2026-10-20
+objectortagbase	method	AddProgramST	AddProgramST(string?)	ProgramSTItem	2026-10-20
+objectortagbase	method	AddReport	AddReport(string?)	ReportItem	2026-10-20
+objectortagbase	method	AddWindow	AddWindow(string?)	ViewDeclarationInObjectItem	2026-10-20
+objectfolder	base	TagFolder			2026-10-20
+objectfolder	method	AddObject	AddObject(string?)	ObjectItem	2026-10-20
+objectfolder	method	AddTagBase	AddTagBase(string?)	TagItem	2026-10-20
+objectfolder	method	AddTagInteger	AddTagInteger(string?)	TagInstanceItem	2026-10-20
+objectfolder	method	AddTagIntegerInheritance	AddTagIntegerInheritance(string?)	TagItem	2026-10-20
+objectfolder	method	AddTagLogical	AddTagLogical(string?)	TagInstanceItem	2026-10-20
+objectfolder	method	AddTagLogicalInheritance	AddTagLogicalInheritance(string?)	TagItem	2026-10-20
+objectfolder	method	AddTagReal	AddTagReal(string?)	TagInstanceItem	2026-10-20
+objectfolder	method	AddTagRealInheritance	AddTagRealInheritance(string?)	TagItem	2026-10-20
+controlleritem	base	ObjectOrTagBase			2026-10-20
+controlleritem	property	Protocols	Protocols	IEnumerable<ProtocolItem>	2026-10-20
+controlleritem	method	AddArchive	AddArchive(string?)	ArchiveItem	2026-10-20
+controlleritem	method	AddArchiveMemory	AddArchiveMemory(string?)	ArchiveMemoryItem	2026-10-20
+controlleritem	method	AddDirectoryArchive	AddDirectoryArchive(string?)	DirectoryArchiveItem	2026-10-20
+controlleritem	method	AddExternalChannel	AddExternalChannel(string?)	ExternalChannelItem	2026-10-20
+controlleritem	method	AddNodeToNodeConnection	AddNodeToNodeConnection(string?)	ProtocolItem	2026-10-20
+controlleritem	method	AddParameter	AddParameter(string?)	AttributeItem	2026-10-20
+controlleritem	method	AddProtocol	AddProtocol(string)	ProtocolItem	2026-10-20
+controlleritem	method	AddReservation	AddReservation(string?)	ProtocolItem	2026-10-20
+controlleritem	method	AddSavingState	AddSavingState(string?)	ProtocolItem	2026-10-20
+controlleritem	method	AddScreen	AddScreen(string?)	ScreenItem	2026-10-20
+controlleritem	method	AddTask	AddTask(string?)	TaskItem	2026-10-20
+controlleritem	method	FindParameter	FindParameter(string)	AttributeItem	2026-10-20
+controlleritem	method	FindProtocol	FindProtocol(string)	ProtocolItem	2026-10-20
+taskitem	base	Item			2026-10-20
+taskitem	property	IsUseForGlobalParams	IsUseForGlobalParams	bool	2026-10-20
+taskitem	property	Period	Period	int	2026-10-20
+taskitem	property	Priority	Priority	int	2026-10-20
+taskitem	property	TranslatorType	TranslatorType	TranslatorType	2026-10-20
+taskitem	enum	TranslatorType	Lua,CSharp		2026-10-20
+taskitem	method	ResetTranslatorType	ResetTranslatorType()		2026-10-20
+taskitem	method	ResetIsUseForGlobalParams	ResetIsUseForGlobalParams()		2026-10-20
+taskitem	method	ResetPeriod	ResetPeriod()		2026-10-20
+taskitem	method	ResetPriority	ResetPriority()		2026-10-20
+variableitem	base	Item			2026-10-20
+variableitem	property	ArchiveTemplate	ArchiveTemplate	ArchiveTemplateItem	2026-10-20
+variableitem	property	ArchiveTemplateType	ArchiveTemplateType	string	2026-10-20
+variableitem	property	DataSource	DataSource	Item	2026-10-20
+variableitem	property	Historizing	Historizing	bool	2026-10-20
+variableitem	property	InitialValue	InitialValue	object	2026-10-20
+variableitem	property	Scale	Scale	ScaleItem	2026-10-20
+variableitem	property	ScaleType	ScaleType	string	2026-10-20
+variableitem	property	ValueType	ValueType	string	2026-10-20
+variableitem	method	AddLink	AddLink(ChannelItem)		2026-10-20
+variableitem	method	AddLink	AddLink(TagInstanceItem)		2026-10-20
+variableitem	method	AddLink	AddLink(TagItem)		2026-10-20
+variableitem	method	AddLink	AddLink(VariableItem)		2026-10-20
+variableitem	method	AddLink	AddLink(ViewAccessParamItem)		2026-10-20
+variableitem	method	AddLink	AddLink(ViewUsageParamItem)		2026-10-20
+variableitem	method	ChangeType	ChangeType(string)		2026-10-20
+variableitem	method	DeleteArchiveTemplateType	DeleteArchiveTemplateType()		2026-10-20
+variableitem	method	DeleteScaleType	DeleteScaleType()		2026-10-20
+variableitem	method	ResetInitialValue	ResetInitialValue()		2026-10-20
+variableitem	method	ResetValueType	ResetValueType()		2026-10-20
+variableitem	method	ResetHistorizing	ResetHistorizing()		2026-10-20
+variableitem	method	TryAddLink	TryAddLink(Item)		2026-10-20
+attributeitem	base	VariableItem			2026-10-20
+attributeitem	property	Access	Access	RWAccessTypes	2026-10-20
+attributeitem	enum	RWAccessTypes	Read,Write,ReadWrite		2026-10-20
+attributeitem	property	Saving	Saving	ModifierTypes	2026-10-20
+attributeitem	enum	ModifierTypes	RETAIN,NON_RETAIN,CONSTANT,NONE		2026-10-20
+attributeitem	method	ResetAccess	ResetAccess()		2026-10-20
+attributeitem	method	ResetSaving	ResetSaving()		2026-10-20
+programitem	base	Item			2026-10-20
+programitem	property	ExecutePlace	ExecutePlace	ExecutePlaces	2026-10-20
+programitem	enum	ExecutePlaces	ObjectTask,ControllerTask,ScreenTask		2026-10-20
+programitem	property	ExecutionMethod	ExecutionMethod	FBExecuteTypes	2026-10-20
+programitem	enum	FBExecuteTypes	Periodic,OnCall,OnStartup		2026-10-20
+programitem	property	FBPrograms	FBPrograms	IEnumerable<POUTypeDeclarationItem>	2026-10-20
+programitem	property	IsExternal	IsExternal	bool	2026-10-20
+programitem	property	LocalVariables	LocalVariables	IEnumerable<LocalVarItem>	2026-10-20
+programitem	property	Parameters	Parameters	IEnumerable<ProgramParamItem>	2026-10-20
+programitem	method	AddLocalVar	AddLocalVar(string?)	LocalVarItem	2026-10-20
+programitem	method	AddPOUTypeDeclaration	AddPOUTypeDeclaration(string)	POUTypeDeclarationItem	2026-10-20
+programitem	method	AddProgramParam	AddProgramParam(string?)	ProgramParamItem	2026-10-20
+programitem	method	ResetExecutePlace	ResetExecutePlace()		2026-10-20
+programitem	method	ResetExecutionMethod	ResetExecutionMethod()		2026-10-20
+programitem	method	ResetIsExternal	ResetIsExternal()		2026-10-20
+programstitem	base	ProgramItem			2026-10-20
+programstitem	property	Text	Text	string	2026-10-20
+programfbditem	base	ProgramItem			2026-10-20
+programfbditem	property	FBsFromAlgoritm	FBsFromAlgoritm	IEnumerable<POUTypeUsageItem>	2026-10-20
+programfbditem	method	AddPOUTypeDeclarationToAlgoritm	AddPOUTypeDeclarationToAlgoritm(POUTypeDeclarationItem,string?,int,int)	POUTypeUsageItem	2026-10-20
+programfbditem	method	AddPOUTypeDeclarationToAlgoritm	AddPOUTypeDeclarationToAlgoritm(string,int,int)	POUTypeUsageItem	2026-10-20
+programparamitem	base	VariableItem			2026-10-20
+programparamitem	property	Access	Access	AccessTypes	2026-10-20
+programparamitem	enum	AccessTypes	Input,Output,InOut		2026-10-20
+programparamitem	property	Saving	Saving	ModifierTypes	2026-10-20
+programparamitem	enum	ModifierTypes	RETAIN,NON_RETAIN,CONSTANT,NONE		2026-10-20
+programparamitem	property	Switching	Switching	EdgeTypes	2026-10-20
+programparamitem	enum	EdgeTypes	NONE,R_EDGE,F_EDGE		2026-10-20
+programparamitem	method	ResetAccess	ResetAccess()		2026-10-20
+programparamitem	method	ResetSaving	ResetSaving()		2026-10-20
+programparamitem	method	ResetSwitching	ResetSwitching()		2026-10-20
+localvaritem	base	Item			2026-10-20
+localvaritem	property	InitialValue	InitialValue	object	2026-10-20
+localvaritem	property	Scale	Scale	ScaleItem	2026-10-20
+localvaritem	property	ScaleType	ScaleType	string	2026-10-20
+localvaritem	property	ValueType	ValueType	string	2026-10-20
+localvaritem	method	DeleteScaleType	DeleteScaleType()		2026-10-20
+localvaritem	method	ResetInitialValue	ResetInitialValue()		2026-10-20
+localvaritem	method	ResetValueType	ResetValueType()		2026-10-20
+taginstanceitem	base	ObjectOrTagInstanceItem			2026-10-20
+taginstanceitem	property	Ancestor	Ancestor	TagItem	2026-10-20
+taginstanceitem	property	ArchiveTemplate	ArchiveTemplate	ArchiveTemplateItem	2026-10-20
+taginstanceitem	property	ArchiveTemplateType	ArchiveTemplateType	string	2026-10-20
+taginstanceitem	property	DataSource	DataSource	Item	2026-10-20
+taginstanceitem	property	DisableExecution	DisableExecution	bool	2026-10-20
+taginstanceitem	property	Historizing	Historizing	bool	2026-10-20
+taginstanceitem	property	Scale	Scale	ScaleItem	2026-10-20
+taginstanceitem	property	ScaleType	ScaleType	string	2026-10-20
+taginstanceitem	method	AddLink	AddLink(ChannelItem)		2026-10-20
+taginstanceitem	method	AddLink	AddLink(TagInstanceItem)		2026-10-20
+taginstanceitem	method	AddLink	AddLink(TagItem)		2026-10-20
+taginstanceitem	method	AddLink	AddLink(VariableItem)		2026-10-20
+taginstanceitem	method	Delete	Delete()		2026-10-20
+taginstanceitem	method	DeleteArchiveTemplateType	DeleteArchiveTemplateType()		2026-10-20
+taginstanceitem	method	DeleteScaleType	DeleteScaleType()		2026-10-20
+taginstanceitem	method	ResetHistorizing	ResetHistorizing()		2026-10-20
+taginstanceitem	method	TryAddLink	TryAddLink(Item)		2026-10-20
+channelitem	base	Item			2026-10-20
+channelitem	property	Access	Access	AccessTypes	2026-10-20
+channelitem	enum	AccessTypes	Input,Output,InOut		2026-10-20
+channelitem	property	ArchiveTemplate	ArchiveTemplate	ArchiveTemplateItem	2026-10-20
+channelitem	property	ArchiveTemplateType	ArchiveTemplateType	string	2026-10-20
+channelitem	property	DataSource	DataSource	Item	2026-10-20
+channelitem	property	Historizing	Historizing	bool	2026-10-20
+channelitem	property	Scale	Scale	ScaleItem	2026-10-20
+channelitem	property	ScaleType	ScaleType	string	2026-10-20
+channelitem	property	Settings	Settings	IEnumerable<SettingItem>	2026-10-20
+channelitem	property	InheritFromScale	InheritFromScale	bool	2026-10-20
+channelitem	property	SourceMin	SourceMin	string	2026-10-20
+channelitem	property	SourceMax	SourceMax	string	2026-10-20
+channelitem	property	TargetMin	TargetMin	string	2026-10-20
+channelitem	property	TargetMax	TargetMax	string	2026-10-20
+channelitem	property	UseScaling	UseScaling	bool	2026-10-20
+channelitem	method	AddLink	AddLink(ChannelItem)		2026-10-20
+channelitem	method	AddLink	AddLink(TagInstanceItem)		2026-10-20
+channelitem	method	AddLink	AddLink(TagItem)		2026-10-20
+channelitem	method	AddLink	AddLink(VariableItem)		2026-10-20
+channelitem	method	DeleteArchiveTemplateType	DeleteArchiveTemplateType()		2026-10-20
+channelitem	method	DeleteScaleType	DeleteScaleType()		2026-10-20
+channelitem	method	FindAttribute	FindAttribute(string)	AttributeItem	2026-10-20
+channelitem	method	ResetHistorizing	ResetHistorizing()	bool	2026-10-20
+channelitem	method	ResetInheritFromScale	ResetInheritFromScale()	bool	2026-10-20
+channelitem	method	ResetUseScaling	ResetUseScaling()	bool	2026-10-20
+channelitem	method	ResetSourceMin	ResetSourceMin()	bool	2026-10-20
+channelitem	method	ResetSourceMax	ResetSourceMax()	bool	2026-10-20
+channelitem	method	ResetTargetMin	ResetTargetMin()	bool	2026-10-20
+channelitem	method	ResetTargetMax	ResetTargetMax()	bool	2026-10-20
+channelitem	method	ResetAccess	ResetAccess()	bool	2026-10-20
+channelitem	method	TryAddLink	TryAddLink(Item)		2026-10-20
+librariesitem	base	CommonItem			2026-10-20
+programlditem	base	ProgramItem			2026-10-20
+programsfcitem	base	ProgramItem			2026-10-20
