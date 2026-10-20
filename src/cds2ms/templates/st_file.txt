@@ -1,0 +1,4 @@
+(* создано cds2ms {version} · {source} · SHA-256 {sha256}
+   Файл .ST для «Импорт ST текста» MasterSCADA 4D. Формат файла в справке 1.3.10 не описан
+   (HW:export_i_import_programm_st): шаблон черновой [L], сверяется пробой P-CS-03. *)
+{text}
