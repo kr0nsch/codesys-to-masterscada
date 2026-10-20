@@ -1,0 +1,184 @@
+# CI cds2ms: проверки без CODESYS и MasterSCADA. Съёмка трасс в CODESYS Control Win и сборка скрипта против
+# MasterSCADA.Scripts.Model.dll — локально (docs/ORACLES.md, docs/HARDWARE_VALIDATION.md).
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHONIOENCODING: utf-8
+  PYTHONUTF8: "1"
+  RUSTY_VERSION: v1.0.6
+  # SHA-256 файлов релиза RuSTy v1.0.6 (как в ci.yml s7-to-codesys @ 2285760c)
+  RUSTY_PLC_SHA256: cee05d9871b7a4dea66ad0e1a3a94cce858d28967c0bdecd16a821e3c621a6bf
+  RUSTY_STDLIB_SHA256: 17086c67d46cdba0a6acf8c3c8e3b594804053df3913dab2756ef555cb826129
+
+jobs:
+  checks:
+    name: lint, типы, тесты (${{ matrix.os }}, Python ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.12", "3.14"]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Зависимости
+        run: python -m pip install -r requirements-dev.txt -e .
+
+      - name: XSD TC6 2.01 (plcopen.org, по SHA-256 в .cache/xsd)
+        run: python tools/fetch_xsd.py
+
+      - name: ruff
+        run: python -m ruff check . && python -m ruff format --check .
+
+      - name: mypy --strict
+        run: python -m mypy
+
+      - name: pytest (unit, корпус правил, свойства, корпус и трассы, кейсы, CLI)
+        env:
+          REQUIRE_XSD: "1"
+        run: python -m pytest --cov=cds2ms --cov-branch --cov-report=json:build/coverage.json
+
+      - name: Пороги покрытия
+        run: python tools/check_coverage.py build/coverage.json
+
+      - name: Сгенерированное не устарело
+        run: |
+          python tools/gen_docs.py --check
+          python tools/gen_rule_corpus.py --check
+          python tools/corpus/build_corpus.py --check
+          python tools/corpus/gen_scenarios.py --check
+          python tools/gen_stub.py --check
+
+      - name: Детерминизм (SHA-256 zip и отчёта)
+        run: |
+          mkdir -p build/det
+          for c in "corpus/udr1/source.cds.xml:udr1" "corpus/s7-chain:chain"; do
+            inp="${c%%:*}"; name="${c##*:}"
+            python -m cds2ms migrate "$inp" --out "build/det/$name" --zip "build/det/$name.zip" --fail-on never > /dev/null
+            python -m cds2ms migrate "$inp" --out "build/det/$name-2" --zip "build/det/$name-2.zip" --fail-on never > /dev/null
+            cmp "build/det/$name.zip" "build/det/$name-2.zip"
+          done
+          python - <<'EOF' > build/det/sha256.txt
+          import hashlib, pathlib
+          for p in ["build/det/udr1.zip", "build/det/chain.zip", "build/det/udr1/MIGRATION_REPORT.json", "build/det/chain/MIGRATION_REPORT.json"]:
+              print(hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest(), p)
+          EOF
+          cat build/det/sha256.txt
+
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: det-${{ matrix.os }}-${{ matrix.python }}
+          path: build/det/sha256.txt
+          retention-days: 7
+
+  determinism:
+    name: одинаковые байты на ubuntu и windows
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@v8.0.1
+        with:
+          pattern: det-*
+      - name: Сравнение SHA-256
+        run: |
+          diff det-ubuntu-latest-3.12/sha256.txt det-windows-latest-3.12/sha256.txt
+          diff det-ubuntu-latest-3.12/sha256.txt det-ubuntu-latest-3.14/sha256.txt
+          diff det-ubuntu-latest-3.12/sha256.txt det-windows-latest-3.14/sha256.txt
+
+  csharp:
+    name: C#-скрипт против макета API (dotnet, C# 5)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-dotnet@v6.0.0
+        with:
+          dotnet-version: "8.0.x"
+      - run: python -m pip install -e .
+      - name: migrate + сборка макета, FakeRunner, tree.json = expected-tree.json
+        run: |
+          python -m cds2ms migrate corpus/udr1/source.cds.xml --out out/udr1 --fail-on never
+          python tools/csc_check.py out/udr1 --dotnet
+          python tools/gen_stub.py --check
+
+  rusty:
+    name: RuSTy plc --check (Master ST, 0 неожиданных)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: python -m pip install -r requirements-dev.txt -e .
+      - name: RuSTy ${{ env.RUSTY_VERSION }} (по SHA-256)
+        run: |
+          dir="$RUNNER_TEMP/rusty"
+          base="https://github.com/PLC-lang/rusty/releases/download/$RUSTY_VERSION"
+          mkdir -p "$dir"
+          curl -fsSL --retry 3 -o "$dir/plc" "$base/plc-linux-x86_64"
+          curl -fsSL --retry 3 -o "$dir/stdlib.tar.gz" "$base/stdlib-${RUSTY_VERSION#v}.tar.gz"
+          echo "$RUSTY_PLC_SHA256  $dir/plc" | sha256sum -c -
+          echo "$RUSTY_STDLIB_SHA256  $dir/stdlib.tar.gz" | sha256sum -c -
+          chmod +x "$dir/plc"
+          tar -xzf "$dir/stdlib.tar.gz" -C "$dir"
+          "$dir/plc" --version
+          echo "RUSTY_PLC=$dir/plc" >> "$GITHUB_ENV"
+          echo "RUSTY_STDLIB_INCLUDE=$(find "$dir" -type d -name include | head -1)" >> "$GITHUB_ENV"
+      - name: plc --check кейсов против rusty-expected.json
+        env:
+          REQUIRE_RUSTY: "1"
+        run: |
+          python tools/rusty_check.py
+          python -m pytest tests/unit/test_rusty.py -q
+
+  xsd:
+    name: XML выходов по XSD TC6 2.01
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: python -m pip install -r requirements-dev.txt -e .
+      - uses: actions/cache@v6.1.0
+        with:
+          path: .cache/xsd
+          key: xsd-tc6-201-591b92ba
+      - run: python tools/fetch_xsd.py
+      - name: XSD обязателен
+        env:
+          REQUIRE_XSD: "1"
+        run: python -m pytest tests/unit/test_transform_emit.py -q -k xsd

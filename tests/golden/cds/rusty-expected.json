@@ -1,0 +1,14 @@
+{
+ "rusty": "1.0.6",
+ "adapter": "VAR_INOUT -> VAR_IN_OUT; UNION -> STRUCT",
+ "case": "cds",
+ "diagnostics": [
+  {
+   "code": "E048",
+   "file": "FB_FlowTotal.st",
+   "line": 15,
+   "message": "Could not resolve reference to TIME_TO_REAL",
+   "reason": "в stdlib RuSTy 1.0.6 нет TIME_TO_REAL (в CODESYS есть)"
+  }
+ ]
+}

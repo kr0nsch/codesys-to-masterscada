@@ -1,0 +1,49 @@
+{
+ "rusty": "1.0.6",
+ "adapter": "VAR_INOUT -> VAR_IN_OUT; UNION -> STRUCT",
+ "case": "chain",
+ "diagnostics": [
+  {
+   "code": "E048",
+   "file": "FB_BatchCounter.st",
+   "line": 77,
+   "message": "Could not resolve reference to RESET",
+   "reason": "CTU в stdlib RuSTy — вход R по IEC 61131-3, в CODESYS Standard — RESET (MS-LIB-01: сверить в MasterSCADA)"
+  },
+  {
+   "code": "E089",
+   "file": "FB_BatchCounter.st",
+   "line": 77,
+   "message": "Invalid call parameters",
+   "reason": "следствие предыдущей: вызов CTU с RESET"
+  },
+  {
+   "code": "E048",
+   "file": "FB_PIController.st",
+   "line": 85,
+   "message": "Could not resolve reference to TIME_TO_DINT",
+   "reason": "в stdlib RuSTy 1.0.6 нет TIME_TO_DINT (в CODESYS есть)"
+  },
+  {
+   "code": "E048",
+   "file": "FB_PIController.st",
+   "line": 86,
+   "message": "Could not resolve reference to TIME_TO_DINT",
+   "reason": "в stdlib RuSTy 1.0.6 нет TIME_TO_DINT (в CODESYS есть)"
+  },
+  {
+   "code": "E048",
+   "file": "FB_Ramp.st",
+   "line": 58,
+   "message": "Could not resolve reference to TIME_TO_DINT",
+   "reason": "в stdlib RuSTy 1.0.6 нет TIME_TO_DINT (в CODESYS есть)"
+  },
+  {
+   "code": "E048",
+   "file": "FB_Totalizer.st",
+   "line": 76,
+   "message": "Could not resolve reference to TIME_TO_DINT",
+   "reason": "в stdlib RuSTy 1.0.6 нет TIME_TO_DINT (в CODESYS есть)"
+  }
+ ]
+}
