@@ -104,10 +104,11 @@ jobs:
         with:
           pattern: det-*
       - name: Сравнение SHA-256
+        # print() в Windows пишет сводку с CRLF — сравниваются сами SHA-256
         run: |
-          diff det-ubuntu-latest-3.12/sha256.txt det-windows-latest-3.12/sha256.txt
-          diff det-ubuntu-latest-3.12/sha256.txt det-ubuntu-latest-3.14/sha256.txt
-          diff det-ubuntu-latest-3.12/sha256.txt det-windows-latest-3.14/sha256.txt
+          diff --strip-trailing-cr det-ubuntu-latest-3.12/sha256.txt det-windows-latest-3.12/sha256.txt
+          diff --strip-trailing-cr det-ubuntu-latest-3.12/sha256.txt det-ubuntu-latest-3.14/sha256.txt
+          diff --strip-trailing-cr det-ubuntu-latest-3.12/sha256.txt det-windows-latest-3.14/sha256.txt
 
   csharp:
     name: C#-скрипт против макета API (dotnet, C# 5)
