@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0201">
+  <fileHeader companyName="kr0nsch" productName="cds2ms" productVersion="0.1.0" creationDateTime="1980-01-01T00:00:00" contentDescription="создано cds2ms 0.1.0 · P_IMP · SHA-256 0000000000000000000000000000000000000000000000000000000000000000" />
+  <contentHeader name="P_IMP">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+  </contentHeader>
+  <types>
+    <dataTypes />
+    <pous>
+      <pou name="FB_ProbeInOut" pouType="functionBlock">
+        <interface>
+          <inOutVars>
+            <variable name="iCount">
+              <type>
+                <INT />
+              </type>
+            </variable>
+          </inOutVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">iCount := iCount + 1;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_ProbeInOut" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="fb">
+              <type>
+                <derived name="FB_ProbeInOut" />
+              </type>
+            </variable>
+            <variable name="iCount">
+              <type>
+                <INT />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">fb(iCount := iCount);
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations>
+      <configuration name="migConfig">
+        <resource name="migResource" />
+        <globalVars name="GVL_ProbeConst" constant="true">
+          <variable name="iLimit">
+            <type>
+              <INT />
+            </type>
+            <initialValue>
+              <simpleValue value="100" />
+            </initialValue>
+          </variable>
+        </globalVars>
+        <globalVars name="GVL_ProbeRetain" retain="true">
+          <variable name="iRetained">
+            <type>
+              <INT />
+            </type>
+          </variable>
+        </globalVars>
+      </configuration>
+    </configurations>
+  </instances>
+</project>

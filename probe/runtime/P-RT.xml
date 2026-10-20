@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0201">
+  <fileHeader companyName="kr0nsch" productName="cds2ms" productVersion="0.1.0" creationDateTime="1980-01-01T00:00:00" contentDescription="создано cds2ms 0.1.0 · P_RT · SHA-256 0000000000000000000000000000000000000000000000000000000000000000" />
+  <contentHeader name="P_RT">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+  </contentHeader>
+  <types>
+    <dataTypes />
+    <pous>
+      <pou name="PRG_ProbeInt" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="iMax">
+              <type>
+                <INT />
+              </type>
+              <initialValue>
+                <simpleValue value="32767" />
+              </initialValue>
+            </variable>
+            <variable name="iOvf">
+              <type>
+                <INT />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">iOvf := iMax + 1;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_ProbeDiv" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="iA">
+              <type>
+                <INT />
+              </type>
+              <initialValue>
+                <simpleValue value="-7" />
+              </initialValue>
+            </variable>
+            <variable name="iB">
+              <type>
+                <INT />
+              </type>
+              <initialValue>
+                <simpleValue value="2" />
+              </initialValue>
+            </variable>
+            <variable name="iDiv">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="iMod">
+              <type>
+                <INT />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">iDiv := iA / iB;
+iMod := iA MOD iB;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_ProbeDivZero" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="iA">
+              <type>
+                <INT />
+              </type>
+              <initialValue>
+                <simpleValue value="7" />
+              </initialValue>
+            </variable>
+            <variable name="iZero">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="iRes">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="rRes">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">iRes := iA / iZero;
+rRes := 1.0 / INT_TO_REAL(iZero);
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_ProbeReal" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="iM15">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="iP25">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="rBig">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">iM15 := REAL_TO_INT(-1.5);
+iP25 := REAL_TO_INT(2.5);
+rBig := 16777217.0;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_ProbeTime" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="tZero">
+              <type>
+                <TIME />
+              </type>
+              <initialValue>
+                <simpleValue value="T#0MS" />
+              </initialValue>
+            </variable>
+            <variable name="tNeg">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="tBig">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">tNeg := tZero - T#1MS;
+tBig := T#25D;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_ProbeLen" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="iLen">
+              <type>
+                <INT />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">iLen := LEN('Привет');
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_ProbeDt" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="dtDefault">
+              <type>
+                <DT />
+              </type>
+            </variable>
+            <variable name="xIs1970">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">xIs1970 := dtDefault = DT#1970-01-01-00:00:00;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_ProbeArray" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="aVal">
+              <type>
+                <array>
+                  <dimension lower="0" upper="9" />
+                  <baseType>
+                    <INT />
+                  </baseType>
+                </array>
+              </type>
+            </variable>
+            <variable name="i">
+              <type>
+                <INT />
+              </type>
+              <initialValue>
+                <simpleValue value="10" />
+              </initialValue>
+            </variable>
+            <variable name="xIsNull">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">xIsNull := aVal[i] = NULL;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_ProbeFor" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="i">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="iSum">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="iAfter">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="iIter">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="iLast">
+              <type>
+                <INT />
+              </type>
+              <initialValue>
+                <simpleValue value="5" />
+              </initialValue>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">iSum := 0;
+FOR i := 10 TO 0 BY -1 DO
+    iSum := iSum + i;
+END_FOR;
+iAfter := i;
+iIter := 0;
+FOR i := 1 TO iLast DO
+    iIter := iIter + 1;
+    iLast := 3;
+END_FOR;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_ProbeTon" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="fbTon">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="tStart">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="tFirstQ">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="xDone">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">fbTon(IN := TRUE, PT := T#150MS);
+IF fbTon.Q AND NOT xDone THEN
+    tFirstQ := fbTon.ET;
+    xDone := TRUE;
+END_IF;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="FB_ProbeMethod" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="migCall">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="Scale_rIn">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="Scale_ret">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="rGain">
+              <type>
+                <REAL />
+              </type>
+              <initialValue>
+                <simpleValue value="2.0" />
+              </initialValue>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">IF migCall &lt;&gt; 0 THEN
+    CASE migCall OF
+        1:
+            Scale_ret := Scale_rIn * rGain;
+    END_CASE;
+    migCall := 0;
+    RETURN;
+END_IF;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_ProbeMethod" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="fb">
+              <type>
+                <derived name="FB_ProbeMethod" />
+              </type>
+            </variable>
+            <variable name="rOut">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">fb(migCall := 1, Scale_rIn := 2.0);
+rOut := fb.Scale_ret;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations>
+      <configuration name="migConfig">
+        <resource name="migResource" />
+      </configuration>
+    </configurations>
+  </instances>
+</project>

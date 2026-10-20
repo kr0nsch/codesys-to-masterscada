@@ -1,0 +1,43 @@
+{
+  "node": "PLC210",
+  "tasks": [
+    {
+      "name": "TaskFast",
+      "Period": 10
+    },
+    {
+      "name": "TaskSlow",
+      "Period": 200
+    },
+    {
+      "name": "TaskAlarm",
+      "Period": 20
+    }
+  ],
+  "dispatchers": [
+    {
+      "name": "migTask_TaskFast",
+      "TaskRef": "Система.PLC210.TaskFast",
+      "calls": [
+        "PRG_Main",
+        "PRG_Permissives",
+        "PRG_PumpInterlock"
+      ]
+    },
+    {
+      "name": "migTask_TaskSlow",
+      "TaskRef": "Система.PLC210.TaskSlow",
+      "calls": [
+        "PRG_FillSeq",
+        "PRG_CipSeq"
+      ]
+    },
+    {
+      "name": "migTask_TaskAlarm",
+      "TaskRef": "Система.PLC210.TaskAlarm",
+      "calls": [
+        "PRG_OopDemo"
+      ]
+    }
+  ]
+}

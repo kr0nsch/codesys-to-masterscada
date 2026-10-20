@@ -1,0 +1,1979 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0201">
+  <fileHeader companyName="kr0nsch" productName="cds2ms" productVersion="0.1.0" creationDateTime="1980-01-01T00:00:00" contentDescription="создано cds2ms 0.1.0 · source.cds.xml · SHA-256 67b4e46aed09769b9ccf0090a7c9dce961f985a8e2f76c7b84f2a53ff6004ee6" />
+  <contentHeader name="udr1.project">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+  </contentHeader>
+  <types>
+    <dataTypes>
+      <dataType name="E_DoseState">
+        <baseType>
+          <enum>
+            <values>
+              <value name="Idle" value="0" />
+              <value name="Priming" value="10" />
+              <value name="Dosing" value="20" />
+              <value name="Fault" value="99" />
+            </values>
+          </enum>
+        </baseType>
+      </dataType>
+      <dataType name="ST_Recipe">
+        <baseType>
+          <struct>
+            <variable name="rRatio">
+              <type>
+                <REAL />
+              </type>
+              <initialValue>
+                <simpleValue value="0.02" />
+              </initialValue>
+            </variable>
+            <variable name="tMix">
+              <type>
+                <TIME />
+              </type>
+              <initialValue>
+                <simpleValue value="T#500MS" />
+              </initialValue>
+            </variable>
+            <variable name="sName">
+              <type>
+                <string length="20" />
+              </type>
+              <initialValue>
+                <simpleValue value="'NaOCl'" />
+              </initialValue>
+            </variable>
+          </struct>
+        </baseType>
+      </dataType>
+    </dataTypes>
+    <pous>
+      <pou name="F_Clamp" pouType="function">
+        <interface>
+          <returnType>
+            <REAL />
+          </returnType>
+          <inputVars>
+            <variable name="rIn">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="rMin">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="rMax">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </inputVars>
+          <localVars>
+            <variable name="rLo">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="rHi">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">IF rMin &lt;= rMax THEN
+    rLo := rMin;
+    rHi := rMax;
+ELSE
+    rLo := rMax;
+    rHi := rMin;
+END_IF
+F_Clamp := LIMIT(rLo, rIn, rHi);
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="FB_AnalogScale" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="iRaw">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="rLo">
+              <type>
+                <REAL />
+              </type>
+              <initialValue>
+                <simpleValue value="0.0" />
+              </initialValue>
+            </variable>
+            <variable name="rHi">
+              <type>
+                <REAL />
+              </type>
+              <initialValue>
+                <simpleValue value="100.0" />
+              </initialValue>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="rValue">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="xFault">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </outputVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">IF iRaw &lt; 0 OR iRaw &gt; 27648 THEN
+    xFault := TRUE;
+ELSE
+    xFault := FALSE;
+    rValue := F_Clamp(rIn := rLo + (rHi - rLo) * INT_TO_REAL(iRaw) / 27648.0, rMin := rLo, rMax := rHi);
+END_IF
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="FB_FlowTotal" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="rFlow_m3h">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="tCycle">
+              <type>
+                <TIME />
+              </type>
+              <initialValue>
+                <simpleValue value="T#100MS" />
+              </initialValue>
+            </variable>
+            <variable name="xReset">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="rTotal_m3">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="diPulses">
+              <type>
+                <DINT />
+              </type>
+            </variable>
+          </outputVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">IF xReset THEN
+    rTotal_m3 := 0.0;
+ELSIF rFlow_m3h &gt; 0.0 THEN
+    rTotal_m3 := rTotal_m3 + rFlow_m3h * TIME_TO_REAL(tCycle) / 3600000.0;
+END_IF
+diPulses := REAL_TO_DINT(rTotal_m3);
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_TonQuant" pouType="program">
+        <interface>
+          <inputVars>
+            <variable name="xStart">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="xQ">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="tEt">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="fbTon">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">fbTon(IN := xStart, PT := T#150MS);
+xQ := fbTon.Q;
+tEt := fbTon.ET;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_Main" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="fbScale">
+              <type>
+                <derived name="FB_AnalogScale" />
+              </type>
+            </variable>
+            <variable name="fbTotal">
+              <type>
+                <derived name="FB_FlowTotal" />
+              </type>
+            </variable>
+            <variable name="eState">
+              <type>
+                <derived name="E_DoseState" />
+              </type>
+              <initialValue>
+                <simpleValue value="E_DoseState.Idle" />
+              </initialValue>
+            </variable>
+            <variable name="stRecipe">
+              <type>
+                <derived name="ST_Recipe" />
+              </type>
+            </variable>
+            <variable name="sMsg">
+              <type>
+                <string length="40" />
+              </type>
+            </variable>
+            <variable name="ltUptime">
+              <type>
+                <derived name="LTIME" />
+              </type>
+            </variable>
+            <variable name="dtLastStart">
+              <type>
+                <DT />
+              </type>
+            </variable>
+            <variable name="rLevel">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="iStep">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="pRaw">
+              <type>
+                <pointer>
+                  <baseType>
+                    <INT />
+                  </baseType>
+                </pointer>
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">(* cds2ms: MIGRATION-TODO вручную: MS-ST-05 — см. MANUAL_STEPS.md *)
+fbScale(iRaw := GVL_IO_iFlowRaw, rLo := 0.0, rHi := 120.0);
+fbTotal(rFlow_m3h := fbScale.rValue, tCycle := T#10MS);
+GVL_Retain_rTotalDosed := fbTotal.rTotal_m3;
+IF eState = E_DoseState.Dosing THEN
+    GVL_IO_xPumpOut := TRUE;
+END_IF;
+IF GVL_IO_xLevelLow THEN
+    GVL_IO_xPumpOut := FALSE;
+END_IF;
+CASE eState OF
+    E_DoseState.Idle:
+        IF NOT GVL_IO_xLevelLow THEN
+            eState := E_DoseState.Priming;
+            dtLastStart := DT#1970-01-01-00:00:00;
+        END_IF
+    E_DoseState.Priming:
+        eState := E_DoseState.Dosing;
+    E_DoseState.Dosing:
+        IF GVL_IO_xLevelLow THEN
+            eState := E_DoseState.Idle;
+        END_IF
+ELSE
+    eState := E_DoseState.Fault;
+END_CASE
+ltUptime := ltUptime + LTIME#10MS;
+sMsg := stRecipe.sName;
+rLevel := fbScale.rValue;
+pRaw := ADR(iStep);
+IF iStep &gt; 3 THEN
+    JMP lblEnd;
+END_IF
+iStep := iStep + 1;
+lblEnd:
+;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_OopDemo" pouType="program">
+        <interface>
+          <inputVars>
+            <variable name="xRun">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xStop">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="rTotal_ml">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="iState">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="rPumped_ml">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="iLoops">
+              <type>
+                <INT />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="fbPump">
+              <type>
+                <derived name="FB_DosingPump" />
+              </type>
+            </variable>
+            <variable name="xOk">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </localVars>
+          <localVars>
+            <variable name="migT1">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">(* itfDev := fbPump: интерфейс заменён экземпляром (MS-LANG-06) *)
+IF xRun AND NOT fbPump.xRunning THEN
+    fbPump(migCall := 1);
+    xOk := fbPump.Start_ret;
+END_IF;
+IF xStop THEN
+    fbPump(migCall := 2);
+END_IF;
+fbPump(rStroke_ml := 0.5);
+fbPump(migCall := 3, Dose_rAmount_ml := 0.25, Dose_rTotal_ml := rTotal_ml);
+rTotal_ml := fbPump.Dose_rTotal_mlOut;
+xOk := fbPump.Dose_ret;
+iState := fbPump.State;
+iLoops := 0;
+WHILE TRUE DO
+    fbPump(migCall := 4, NeedsMore_rTarget_ml := 2.0);
+    migT1 := fbPump.NeedsMore_ret;
+    IF NOT (migT1 AND iLoops &lt; 3) THEN
+        EXIT;
+    END_IF;
+    fbPump(rStroke_ml := 0.5);
+    iLoops := iLoops + 1;
+END_WHILE;
+rPumped_ml := fbPump.Dosed;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="FB_DeviceBase" pouType="functionBlock">
+        <interface>
+          <outputVars>
+            <variable name="xRunning">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="udiTicks">
+              <type>
+                <UDINT />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="iState">
+              <type>
+                <INT />
+              </type>
+            </variable>
+          </localVars>
+          <inputVars>
+            <variable name="migCall">
+              <type>
+                <INT />
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="Start_ret">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="State">
+              <type>
+                <INT />
+              </type>
+            </variable>
+          </outputVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">(* cds2ms: MS-LANG-06 режим вызова методов *)
+IF migCall &lt;&gt; 0 THEN
+    CASE migCall OF
+        1: (* Start *)
+            xRunning := TRUE;
+            iState := 1;
+            Start_ret := TRUE;
+        2: (* Stop *)
+            xRunning := FALSE;
+            iState := 0;
+    END_CASE;
+    State := iState;
+    migCall := 0;
+    RETURN;
+END_IF;
+IF xRunning THEN
+    udiTicks := udiTicks + 1;
+END_IF
+State := iState;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="FB_DosingPump" pouType="functionBlock">
+        <interface>
+          <outputVars>
+            <variable name="xRunning">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="udiTicks">
+              <type>
+                <UDINT />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="iState">
+              <type>
+                <INT />
+              </type>
+            </variable>
+          </localVars>
+          <inputVars>
+            <variable name="rStroke_ml">
+              <type>
+                <REAL />
+              </type>
+              <initialValue>
+                <simpleValue value="0.5" />
+              </initialValue>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="rDosed_ml">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </outputVars>
+          <inputVars>
+            <variable name="migCall">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="Dose_rAmount_ml">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="Dose_rTotal_ml">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="NeedsMore_rTarget_ml">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="Start_ret">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="Dose_ret">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="Dose_rTotal_mlOut">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="NeedsMore_ret">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="State">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="Dosed">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </outputVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">(* cds2ms: MS-LANG-06 режим вызова методов *)
+IF migCall &lt;&gt; 0 THEN
+    CASE migCall OF
+        1: (* Start *)
+            xRunning := TRUE;
+            iState := 1;
+            Start_ret := TRUE;
+        2: (* Stop *)
+            xRunning := FALSE;
+            iState := 0;
+        3: (* Dose *)
+            IF xRunning THEN
+                Dose_rTotal_ml := Dose_rTotal_ml + Dose_rAmount_ml;
+                Dose_ret := TRUE;
+            ELSE
+                Dose_ret := FALSE;
+            END_IF
+            Dose_rTotal_mlOut := Dose_rTotal_ml;
+        4: (* NeedsMore *)
+            NeedsMore_ret := rDosed_ml &lt; NeedsMore_rTarget_ml;
+        5: (* Prime *)
+            (* Start() встроен *)
+            xRunning := TRUE;
+            iState := 1;
+            Start_ret := TRUE;
+            rDosed_ml := 0.0;
+    END_CASE;
+    State := iState;
+    Dosed := rDosed_ml;
+    migCall := 0;
+    RETURN;
+END_IF;
+(* SUPER^() *)
+IF xRunning THEN
+    udiTicks := udiTicks + 1;
+END_IF
+IF xRunning THEN
+    rDosed_ml := rDosed_ml + rStroke_ml;
+END_IF
+State := iState;
+Dosed := rDosed_ml;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="FB_LevelAlarm" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="rLevel">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="rHi">
+              <type>
+                <REAL />
+              </type>
+              <initialValue>
+                <simpleValue value="80.0" />
+              </initialValue>
+            </variable>
+            <variable name="rHiHi">
+              <type>
+                <REAL />
+              </type>
+              <initialValue>
+                <simpleValue value="90.0" />
+              </initialValue>
+            </variable>
+            <variable name="xAck">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xBypass">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="xHi">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xHiHi">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xAlarm">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="fbLatch">
+              <type>
+                <derived name="RS" />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">(* cds2ms: MS-LANG-01 FBD → ST, сеть 1 *)
+xHi := rLevel &gt; rHi;
+(* cds2ms: MS-LANG-01 FBD → ST, сеть 2 *)
+IF NOT xBypass THEN
+    (* cds2ms: MS-LANG-01 FBD → ST, сеть 3 *)
+    fbLatch(SET := rLevel &gt; rHiHi, RESET1 := xAck);
+    xAlarm := fbLatch.Q1;
+END_IF;
+(* cds2ms: MS-LANG-01 FBD → ST, сеть 4 *)
+xHiHi := rLevel &gt; rHiHi;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="FB_ValveCmd" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="xOpenCmd">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xCloseCmd">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xInterlock">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xFbOpen">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="xOpen">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xFault">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xMonitor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="fbState">
+              <type>
+                <derived name="SR" />
+              </type>
+            </variable>
+            <variable name="fbFbDelay">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">(* cds2ms: MS-LANG-01 FBD → ST, сеть 1 *)
+IF xInterlock THEN
+    RETURN;
+END_IF;
+(* cds2ms: MS-LANG-01 FBD → ST, сеть 2 *)
+fbState(SET1 := xOpenCmd, RESET := xCloseCmd);
+xOpen := fbState.Q1;
+(* cds2ms: MS-LANG-01 FBD → ST, сеть 3 *)
+fbFbDelay(IN := xOpen AND NOT xFbOpen, PT := T#40MS);
+xFault := fbFbDelay.Q;
+(* cds2ms: MS-LANG-01 FBD → ST, сеть 4 *)
+xMonitor := xOpen AND NOT xFbOpen;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_Permissives" pouType="program">
+        <interface>
+          <inputVars>
+            <variable name="xLowLevel">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xHighPress">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xStartPb">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xStopPb">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xReset">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="xPermit">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xRunLatch">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xTrip">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="migTrig4_1">
+              <type>
+                <derived name="R_TRIG" />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">(* cds2ms: MS-LANG-02 LD → ST, сеть 1 *)
+xPermit := NOT xLowLevel;
+(* cds2ms: MS-LANG-02 LD → ST, сеть 2 *)
+IF xHighPress THEN
+    xTrip := TRUE;
+END_IF;
+(* cds2ms: MS-LANG-02 LD → ST, сеть 3 *)
+IF xReset THEN
+    xTrip := FALSE;
+END_IF;
+(* cds2ms: MS-LANG-02 LD → ST, сеть 4 *)
+migTrig4_1(CLK := xStartPb);
+IF migTrig4_1.Q AND NOT xTrip AND xPermit THEN
+    xRunLatch := TRUE;
+END_IF;
+(* cds2ms: MS-LANG-02 LD → ST, сеть 5 *)
+IF xStopPb OR xTrip THEN
+    xRunLatch := FALSE;
+END_IF;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_PumpInterlock" pouType="program">
+        <interface>
+          <inputVars>
+            <variable name="xAuto">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xPermit">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xManual">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xLampTest">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="xPumpCmd">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xLamp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="iStarts">
+              <type>
+                <INT />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="xStartPulse">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="iNext">
+              <type>
+                <INT />
+              </type>
+            </variable>
+          </localVars>
+          <localVars>
+            <variable name="migTrig3_1">
+              <type>
+                <derived name="R_TRIG" />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">(* cds2ms: MS-LANG-02 LD → ST, сеть 1 *)
+xPumpCmd := (xAuto AND xPermit) OR xManual;
+(* cds2ms: MS-LANG-02 LD → ST, сеть 2 *)
+xLamp := xPumpCmd OR xLampTest;
+(* cds2ms: MS-LANG-02 LD → ST, сеть 3 *)
+migTrig3_1(CLK := xPumpCmd);
+xStartPulse := migTrig3_1.Q;
+(* cds2ms: MS-LANG-02 LD → ST, сеть 4 *)
+iNext := iStarts + 1;
+(* cds2ms: MS-LANG-02 LD → ST, сеть 5 *)
+iStarts := SEL(xStartPulse, iStarts, iNext);
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="FB_DoseCtrl" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="xEnable">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="rSp">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="rPv">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="rKp">
+              <type>
+                <REAL />
+              </type>
+              <initialValue>
+                <simpleValue value="2.0" />
+              </initialValue>
+            </variable>
+            <variable name="rKi">
+              <type>
+                <REAL />
+              </type>
+              <initialValue>
+                <simpleValue value="0.1" />
+              </initialValue>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="rOut">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="rErr">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="migCfc1">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="migCfc5">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">migCfc1 := rSp - rPv;
+migCfc5 := LIMIT(0.0, migCfc5 + (migCfc1 * rKi), 100.0);
+rOut := SEL(xEnable, 0.0, LIMIT(0.0, (migCfc1 * rKp) + migCfc5, 100.0));
+rErr := migCfc1;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="FB_RatioCalc" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="rFlowA">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="rRatio">
+              <type>
+                <REAL />
+              </type>
+              <initialValue>
+                <simpleValue value="0.02" />
+              </initialValue>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="rFlowBSp">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="rFilt">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="migCfc1">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="migCfc4">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">migCfc1 := rFlowA * rRatio;
+migCfc4 := migCfc4 + ((migCfc1 - migCfc4) * 0.5);
+rFilt := migCfc4;
+rFlowBSp := migCfc1;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_FillSeq" pouType="program">
+        <interface>
+          <inputVars>
+            <variable name="xStart">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xLevelHi">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xTempOk">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="xValveIn">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xHeater">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xMixer">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xAlarm">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="iBatches">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="iSeq">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="xFlush">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="migSfcInit">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migSfcPass">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="migS_Init_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Init_xn">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Init_xp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Init_tmr">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="migS_Init_t">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="migS_Fill_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Fill_xn">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Fill_xp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Fill_tmr">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="migS_Fill_t">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="migS_WaitFill_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_WaitFill_xn">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_WaitFill_xp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_WaitFill_tmr">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="migS_WaitFill_t">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="migS_Heat_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Heat_xn">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Heat_xp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Heat_tmr">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="migS_Heat_t">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="migS_WaitHeat_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_WaitHeat_xn">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_WaitHeat_xp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_WaitHeat_tmr">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="migS_WaitHeat_t">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="migS_Mix_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Mix_xn">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Mix_xp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Mix_tmr">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="migS_Mix_t">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="migS_Done_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Done_xn">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Done_xp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Done_tmr">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="migS_Done_t">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="migA_ActAlarm_q">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActAlarm_qp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActAlarm_s">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActAlarm_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActAlpha_q">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActAlpha_qp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActAlpha_s">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActAlpha_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActCount_q">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActCount_qp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActCount_s">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActCount_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActFill_q">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActFill_qp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActFill_s">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActFill_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActFlush_q">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActFlush_qp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActFlush_s">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActFlush_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActHeat_q">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActHeat_qp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActHeat_s">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActHeat_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActMixer_q">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActMixer_qp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActMixer_s">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActMixer_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActZeta_q">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActZeta_qp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActZeta_s">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActZeta_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">(* cds2ms: MS-LANG-04 SFC → ST-автомат с порядком обработки CODESYS *)
+IF NOT migSfcInit THEN
+    migSfcInit := TRUE;
+    migS_Init_xn := TRUE;
+END_IF;
+(* копия _x -&gt; x и время шагов *)
+migS_Init_xp := migS_Init_x;
+migS_Init_x := migS_Init_xn;
+migS_Fill_xp := migS_Fill_x;
+migS_Fill_x := migS_Fill_xn;
+migS_WaitFill_xp := migS_WaitFill_x;
+migS_WaitFill_x := migS_WaitFill_xn;
+migS_Heat_xp := migS_Heat_x;
+migS_Heat_x := migS_Heat_xn;
+migS_WaitHeat_xp := migS_WaitHeat_x;
+migS_WaitHeat_x := migS_WaitHeat_xn;
+migS_Mix_xp := migS_Mix_x;
+migS_Mix_x := migS_Mix_xn;
+migS_Done_xp := migS_Done_x;
+migS_Done_x := migS_Done_xn;
+migS_Init_tmr(IN := migS_Init_x, PT := T#24D);
+migS_Init_t := migS_Init_tmr.ET;
+migS_Fill_tmr(IN := migS_Fill_x, PT := T#24D);
+migS_Fill_t := migS_Fill_tmr.ET;
+migS_WaitFill_tmr(IN := migS_WaitFill_x, PT := T#24D);
+migS_WaitFill_t := migS_WaitFill_tmr.ET;
+migS_Heat_tmr(IN := migS_Heat_x, PT := T#24D);
+migS_Heat_t := migS_Heat_tmr.ET;
+migS_WaitHeat_tmr(IN := migS_WaitHeat_x, PT := T#24D);
+migS_WaitHeat_t := migS_WaitHeat_tmr.ET;
+migS_Mix_tmr(IN := migS_Mix_x, PT := T#24D);
+migS_Mix_t := migS_Mix_tmr.ET;
+migS_Done_tmr(IN := migS_Done_x, PT := T#24D);
+migS_Done_t := migS_Done_tmr.ET;
+(* блоки управления IEC-действий *)
+migA_ActAlarm_q := (migS_Heat_x AND migS_Heat_t &gt;= T#50MS);
+migA_ActAlarm_x := migA_ActAlarm_q OR migA_ActAlarm_qp;
+migA_ActAlpha_q := migS_Mix_x;
+migA_ActAlpha_x := migA_ActAlpha_q OR migA_ActAlpha_qp;
+migA_ActCount_q := (migS_Mix_x AND NOT migS_Mix_xp);
+migA_ActCount_x := migA_ActCount_q OR migA_ActCount_qp;
+migA_ActFill_q := migS_Fill_x;
+migA_ActFill_x := migA_ActFill_q OR migA_ActFill_qp;
+migA_ActFlush_q := (migS_Fill_x AND migS_Fill_t &lt; T#30MS);
+migA_ActFlush_x := migA_ActFlush_q OR migA_ActFlush_qp;
+migA_ActHeat_q := migS_Heat_x;
+migA_ActHeat_x := migA_ActHeat_q OR migA_ActHeat_qp;
+migA_ActMixer_s := (migA_ActMixer_s OR migS_Mix_x) AND NOT (migS_Done_x);
+migA_ActMixer_q := migA_ActMixer_s;
+migA_ActMixer_x := migA_ActMixer_q OR migA_ActMixer_qp;
+migA_ActZeta_q := migS_Heat_x;
+migA_ActZeta_x := migA_ActZeta_q OR migA_ActZeta_qp;
+(* IEC-действия по алфавиту: проход 1 — последний вызов деактивированных, проход 2 — активные *)
+FOR migSfcPass := 1 TO 2 DO
+    IF (migSfcPass = 1 AND migA_ActAlarm_qp AND NOT migA_ActAlarm_q) OR (migSfcPass = 2 AND migA_ActAlarm_q) THEN
+        xAlarm := migA_ActAlarm_x;
+    END_IF;
+    IF (migSfcPass = 1 AND migA_ActAlpha_qp AND NOT migA_ActAlpha_q) OR (migSfcPass = 2 AND migA_ActAlpha_q) THEN
+        IF migA_ActAlpha_x THEN
+            iSeq := (iSeq * 10 + 1) MOD 10000;
+        END_IF
+    END_IF;
+    IF (migSfcPass = 1 AND migA_ActCount_qp AND NOT migA_ActCount_q) OR (migSfcPass = 2 AND migA_ActCount_q) THEN
+        IF migA_ActCount_x THEN
+            iBatches := iBatches + 1;
+        END_IF
+    END_IF;
+    IF (migSfcPass = 1 AND migA_ActFill_qp AND NOT migA_ActFill_q) OR (migSfcPass = 2 AND migA_ActFill_q) THEN
+        xValveIn := migA_ActFill_x;
+    END_IF;
+    IF (migSfcPass = 1 AND migA_ActFlush_qp AND NOT migA_ActFlush_q) OR (migSfcPass = 2 AND migA_ActFlush_q) THEN
+        xFlush := migA_ActFlush_x;
+    END_IF;
+    IF (migSfcPass = 1 AND migA_ActHeat_qp AND NOT migA_ActHeat_q) OR (migSfcPass = 2 AND migA_ActHeat_q) THEN
+        xHeater := migA_ActHeat_x;
+    END_IF;
+    IF (migSfcPass = 1 AND migA_ActMixer_qp AND NOT migA_ActMixer_q) OR (migSfcPass = 2 AND migA_ActMixer_q) THEN
+        xMixer := migA_ActMixer_x;
+    END_IF;
+    IF (migSfcPass = 1 AND migA_ActZeta_qp AND NOT migA_ActZeta_q) OR (migSfcPass = 2 AND migA_ActZeta_q) THEN
+        IF migA_ActZeta_x THEN
+            iSeq := (iSeq * 10 + 2) MOD 10000;
+        END_IF
+    END_IF;
+END_FOR;
+migA_ActAlarm_qp := migA_ActAlarm_q;
+migA_ActAlpha_qp := migA_ActAlpha_q;
+migA_ActCount_qp := migA_ActCount_q;
+migA_ActFill_qp := migA_ActFill_q;
+migA_ActFlush_qp := migA_ActFlush_q;
+migA_ActHeat_qp := migA_ActHeat_q;
+migA_ActMixer_qp := migA_ActMixer_q;
+migA_ActZeta_qp := migA_ActZeta_q;
+(* переходы *)
+IF migS_Init_x AND migS_Init_xn AND xStart THEN
+    migS_Init_xn := FALSE;
+    migS_Fill_xn := TRUE;
+    migS_Heat_xn := TRUE;
+END_IF;
+IF migS_Fill_x AND migS_Fill_xn AND xLevelHi THEN
+    migS_Fill_xn := FALSE;
+    migS_WaitFill_xn := TRUE;
+END_IF;
+IF migS_Heat_x AND migS_Heat_xn AND xTempOk THEN
+    migS_Heat_xn := FALSE;
+    migS_WaitHeat_xn := TRUE;
+END_IF;
+IF migS_WaitFill_x AND migS_WaitFill_xn AND migS_WaitHeat_x AND migS_WaitHeat_xn AND TRUE THEN
+    migS_WaitFill_xn := FALSE;
+    migS_WaitHeat_xn := FALSE;
+    migS_Mix_xn := TRUE;
+END_IF;
+IF migS_Mix_x AND migS_Mix_xn AND (migS_Mix_t &gt;= T#40MS) THEN
+    migS_Mix_xn := FALSE;
+    migS_Done_xn := TRUE;
+END_IF;
+IF migS_Done_x AND migS_Done_xn AND NOT xStart THEN
+    migS_Done_xn := FALSE;
+    migS_Init_xn := TRUE;
+END_IF;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="PRG_CipSeq" pouType="program">
+        <interface>
+          <inputVars>
+            <variable name="xAcid">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xCaustic">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xDone">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="xAcidPump">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xCausticPump">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="iRinseIn">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="xRinseValve">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="migSfcInit">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migSfcPass">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="migS_Idle_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Idle_xn">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Idle_xp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Idle_tmr">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="migS_Idle_t">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="migS_Acid_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Acid_xn">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Acid_xp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Acid_tmr">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="migS_Acid_t">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="migS_Caustic_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Caustic_xn">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Caustic_xp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Caustic_tmr">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="migS_Caustic_t">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="migS_Rinse_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Rinse_xn">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Rinse_xp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migS_Rinse_tmr">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="migS_Rinse_t">
+              <type>
+                <TIME />
+              </type>
+            </variable>
+            <variable name="migA_ActAcid_q">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActAcid_qp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActAcid_s">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActAcid_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActCaustic_q">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActCaustic_qp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActCaustic_s">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActCaustic_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActRinseIn_q">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActRinseIn_qp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActRinseIn_s">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActRinseIn_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActRinseOut_q">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActRinseOut_qp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActRinseOut_s">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="migA_ActRinseOut_x">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">(* cds2ms: MS-LANG-04 SFC → ST-автомат с порядком обработки CODESYS *)
+IF NOT migSfcInit THEN
+    migSfcInit := TRUE;
+    migS_Idle_xn := TRUE;
+END_IF;
+(* копия _x -&gt; x и время шагов *)
+migS_Idle_xp := migS_Idle_x;
+migS_Idle_x := migS_Idle_xn;
+migS_Acid_xp := migS_Acid_x;
+migS_Acid_x := migS_Acid_xn;
+migS_Caustic_xp := migS_Caustic_x;
+migS_Caustic_x := migS_Caustic_xn;
+migS_Rinse_xp := migS_Rinse_x;
+migS_Rinse_x := migS_Rinse_xn;
+migS_Idle_tmr(IN := migS_Idle_x, PT := T#24D);
+migS_Idle_t := migS_Idle_tmr.ET;
+migS_Acid_tmr(IN := migS_Acid_x, PT := T#24D);
+migS_Acid_t := migS_Acid_tmr.ET;
+migS_Caustic_tmr(IN := migS_Caustic_x, PT := T#24D);
+migS_Caustic_t := migS_Caustic_tmr.ET;
+migS_Rinse_tmr(IN := migS_Rinse_x, PT := T#24D);
+migS_Rinse_t := migS_Rinse_tmr.ET;
+(* блоки управления IEC-действий *)
+migA_ActAcid_q := migS_Acid_x;
+migA_ActAcid_x := migA_ActAcid_q OR migA_ActAcid_qp;
+migA_ActCaustic_q := migS_Caustic_x;
+migA_ActCaustic_x := migA_ActCaustic_q OR migA_ActCaustic_qp;
+migA_ActRinseIn_q := (migS_Rinse_x AND NOT migS_Rinse_xp);
+migA_ActRinseIn_x := migA_ActRinseIn_q OR migA_ActRinseIn_qp;
+migA_ActRinseOut_q := migS_Rinse_x;
+migA_ActRinseOut_x := migA_ActRinseOut_q OR migA_ActRinseOut_qp;
+(* IEC-действия по алфавиту: проход 1 — последний вызов деактивированных, проход 2 — активные *)
+FOR migSfcPass := 1 TO 2 DO
+    IF (migSfcPass = 1 AND migA_ActAcid_qp AND NOT migA_ActAcid_q) OR (migSfcPass = 2 AND migA_ActAcid_q) THEN
+        xAcidPump := migA_ActAcid_x;
+    END_IF;
+    IF (migSfcPass = 1 AND migA_ActCaustic_qp AND NOT migA_ActCaustic_q) OR (migSfcPass = 2 AND migA_ActCaustic_q) THEN
+        xCausticPump := migA_ActCaustic_x;
+    END_IF;
+    IF (migSfcPass = 1 AND migA_ActRinseIn_qp AND NOT migA_ActRinseIn_q) OR (migSfcPass = 2 AND migA_ActRinseIn_q) THEN
+        IF migA_ActRinseIn_x THEN
+            iRinseIn := iRinseIn + 1;
+        END_IF
+    END_IF;
+    IF (migSfcPass = 1 AND migA_ActRinseOut_qp AND NOT migA_ActRinseOut_q) OR (migSfcPass = 2 AND migA_ActRinseOut_q) THEN
+        xRinseValve := migA_ActRinseOut_x;
+    END_IF;
+END_FOR;
+migA_ActAcid_qp := migA_ActAcid_q;
+migA_ActCaustic_qp := migA_ActCaustic_q;
+migA_ActRinseIn_qp := migA_ActRinseIn_q;
+migA_ActRinseOut_qp := migA_ActRinseOut_q;
+(* переходы *)
+IF migS_Idle_x AND migS_Idle_xn AND xAcid THEN
+    migS_Idle_xn := FALSE;
+    migS_Acid_xn := TRUE;
+END_IF;
+IF migS_Acid_x AND migS_Acid_xn AND xDone THEN
+    migS_Acid_xn := FALSE;
+    migS_Rinse_xn := TRUE;
+END_IF;
+IF migS_Idle_x AND migS_Idle_xn AND xCaustic THEN
+    migS_Idle_xn := FALSE;
+    migS_Caustic_xn := TRUE;
+END_IF;
+IF migS_Caustic_x AND migS_Caustic_xn AND xDone THEN
+    migS_Caustic_xn := FALSE;
+    migS_Rinse_xn := TRUE;
+END_IF;
+IF migS_Rinse_x AND migS_Rinse_xn AND NOT xDone THEN
+    migS_Rinse_xn := FALSE;
+    migS_Idle_xn := TRUE;
+END_IF;
+</xhtml>
+          </ST>
+        </body>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations>
+      <configuration name="migConfig">
+        <resource name="migResource">
+          <globalVars name="GVL_Const" constant="true">
+            <variable name="c_rRawFull">
+              <type>
+                <REAL />
+              </type>
+              <initialValue>
+                <simpleValue value="27648.0" />
+              </initialValue>
+            </variable>
+            <variable name="c_tPrime">
+              <type>
+                <TIME />
+              </type>
+              <initialValue>
+                <simpleValue value="T#2S" />
+              </initialValue>
+            </variable>
+          </globalVars>
+          <globalVars name="GVL_IO">
+            <variable name="xLevelLow" address="%IX0.0">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xLevelHigh" address="%IX0.1">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="iFlowRaw" address="%IW2">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="xPumpOut" address="%QX0.0">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xAlarmLamp" address="%QX0.1">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+          </globalVars>
+          <globalVars name="GVL_Retain" retain="true">
+            <variable name="rTotalDosed">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="udiStarts">
+              <type>
+                <UDINT />
+              </type>
+            </variable>
+          </globalVars>
+        </resource>
+      </configuration>
+    </configurations>
+  </instances>
+</project>

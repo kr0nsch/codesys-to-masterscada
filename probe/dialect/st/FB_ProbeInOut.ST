@@ -1,0 +1,6 @@
+FUNCTION_BLOCK FB_ProbeInOut
+VAR_INOUT
+    iCount : INT;
+END_VAR
+iCount := iCount + 1;
+END_FUNCTION_BLOCK
