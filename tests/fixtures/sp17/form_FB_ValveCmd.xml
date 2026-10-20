@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0200">
+  <fileHeader companyName="" productName="CODESYS" productVersion="CODESYS V3.5 SP17 Patch 3" creationDateTime="2026-10-20T08:10:10.204993" />
+  <contentHeader name="udr1.project" modificationDateTime="1601-01-01T03:00:00">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+    <addData>
+      <data name="http://www.3s-software.com/plcopenxml/projectinformation" handleUnknown="implementation">
+        <ProjectInformation />
+      </data>
+    </addData>
+  </contentHeader>
+  <types>
+    <dataTypes />
+    <pous>
+      <pou name="FB_ValveCmd" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="xOpenCmd">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xCloseCmd">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xInterlock">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xFbOpen">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                <InterfaceAsPlainText>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">// Команда клапана: блокировка возвращает без изменений; задержка контроля обратной связи — TON
+FUNCTION_BLOCK FB_ValveCmd
+VAR_INPUT
+    xOpenCmd : BOOL;
+    xCloseCmd : BOOL;
+    xInterlock : BOOL;
+    xFbOpen : BOOL;
+END_VAR
+VAR_OUTPUT
+    xOpen : BOOL;
+    xFault : BOOL;
+    xMonitor : BOOL;
+END_VAR
+VAR
+    fbState : SR;
+    fbFbDelay : TON;
+END_VAR
+</xhtml>
+                </InterfaceAsPlainText>
+              </data>
+            </addData>
+          </inputVars>
+          <outputVars>
+            <variable name="xOpen">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xFault">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xMonitor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                <InterfaceAsPlainText>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">// Команда клапана: блокировка возвращает без изменений; задержка контроля обратной связи — TON
+FUNCTION_BLOCK FB_ValveCmd
+VAR_INPUT
+    xOpenCmd : BOOL;
+    xCloseCmd : BOOL;
+    xInterlock : BOOL;
+    xFbOpen : BOOL;
+END_VAR
+VAR_OUTPUT
+    xOpen : BOOL;
+    xFault : BOOL;
+    xMonitor : BOOL;
+END_VAR
+VAR
+    fbState : SR;
+    fbFbDelay : TON;
+END_VAR
+</xhtml>
+                </InterfaceAsPlainText>
+              </data>
+            </addData>
+          </outputVars>
+          <localVars>
+            <variable name="fbState">
+              <type>
+                <derived name="SR" />
+              </type>
+            </variable>
+            <variable name="fbFbDelay">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                <InterfaceAsPlainText>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">// Команда клапана: блокировка возвращает без изменений; задержка контроля обратной связи — TON
+FUNCTION_BLOCK FB_ValveCmd
+VAR_INPUT
+    xOpenCmd : BOOL;
+    xCloseCmd : BOOL;
+    xInterlock : BOOL;
+    xFbOpen : BOOL;
+END_VAR
+VAR_OUTPUT
+    xOpen : BOOL;
+    xFault : BOOL;
+    xMonitor : BOOL;
+END_VAR
+VAR
+    fbState : SR;
+    fbFbDelay : TON;
+END_VAR
+</xhtml>
+                </InterfaceAsPlainText>
+              </data>
+            </addData>
+          </localVars>
+          <documentation>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml"> Команда клапана: блокировка возвращает без изменений; задержка контроля обратной связи — TON</xhtml>
+          </documentation>
+        </interface>
+        <body>
+          <FBD>
+            <vendorElement localId="10000000000">
+              <position x="0" y="0" />
+              <alternativeText>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">FBD Implementation Attributes</xhtml>
+              </alternativeText>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/fbd/implementationattributes" handleUnknown="implementation">
+                  <fbdattributes xmlns="">
+                    <attribute name="BoxInputFlagsSupported" value="true" />
+                  </fbdattributes>
+                </data>
+              </addData>
+            </vendorElement>
+            <inVariable localId="10000000001">
+              <position x="0" y="0" />
+              <connectionPointOut />
+              <expression>xInterlock</expression>
+            </inVariable>
+            <return localId="10000000002">
+              <position x="0" y="0" />
+              <connectionPointIn>
+                <connection refLocalId="10000000001" />
+              </connectionPointIn>
+            </return>
+            <inVariable localId="20000000000">
+              <position x="0" y="0" />
+              <connectionPointOut />
+              <expression>xOpenCmd</expression>
+            </inVariable>
+            <inVariable localId="20000000001">
+              <position x="0" y="0" />
+              <connectionPointOut />
+              <expression>xCloseCmd</expression>
+            </inVariable>
+            <block localId="20000000002" typeName="SR" instanceName="fbState">
+              <position x="0" y="0" />
+              <inputVariables>
+                <variable formalParameter="SET1">
+                  <connectionPointIn>
+                    <connection refLocalId="20000000000" />
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="RESET">
+                  <connectionPointIn>
+                    <connection refLocalId="20000000001" />
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables />
+              <outputVariables>
+                <variable formalParameter="Q1">
+                  <connectionPointOut />
+                </variable>
+              </outputVariables>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                  <CallType xmlns="">functionblock</CallType>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                  <InputParamTypes xmlns="" />
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                  <OutputParamTypes xmlns="" />
+                </data>
+              </addData>
+            </block>
+            <outVariable localId="20000000003">
+              <position x="0" y="0" />
+              <connectionPointIn>
+                <connection refLocalId="20000000002" formalParameter="Q1" />
+              </connectionPointIn>
+              <expression>xOpen</expression>
+            </outVariable>
+            <inVariable localId="30000000000">
+              <position x="0" y="0" />
+              <connectionPointOut />
+              <expression>xOpen</expression>
+            </inVariable>
+            <inVariable localId="30000000001">
+              <position x="0" y="0" />
+              <connectionPointOut />
+              <expression>xFbOpen</expression>
+            </inVariable>
+            <block localId="30000000002" typeName="NOT">
+              <position x="0" y="0" />
+              <inputVariables>
+                <variable formalParameter="In1">
+                  <connectionPointIn>
+                    <connection refLocalId="30000000001" />
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables />
+              <outputVariables>
+                <variable formalParameter="Out1">
+                  <connectionPointOut />
+                </variable>
+              </outputVariables>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                  <CallType xmlns="">operator</CallType>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                  <InputParamTypes xmlns="" />
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                  <OutputParamTypes xmlns="" />
+                </data>
+              </addData>
+            </block>
+            <block localId="30000000003" typeName="AND">
+              <position x="0" y="0" />
+              <inputVariables>
+                <variable formalParameter="In1">
+                  <connectionPointIn>
+                    <connection refLocalId="30000000000" />
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="In2">
+                  <connectionPointIn>
+                    <connection refLocalId="30000000002" formalParameter="Out1" />
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables />
+              <outputVariables>
+                <variable formalParameter="Out1">
+                  <connectionPointOut />
+                </variable>
+              </outputVariables>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                  <CallType xmlns="">operator</CallType>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                  <InputParamTypes xmlns="" />
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                  <OutputParamTypes xmlns="" />
+                </data>
+              </addData>
+            </block>
+            <inVariable localId="30000000004">
+              <position x="0" y="0" />
+              <connectionPointOut />
+              <expression>T#40MS</expression>
+            </inVariable>
+            <block localId="30000000005" typeName="TON" instanceName="fbFbDelay">
+              <position x="0" y="0" />
+              <inputVariables>
+                <variable formalParameter="IN">
+                  <connectionPointIn>
+                    <connection refLocalId="30000000003" formalParameter="Out1" />
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="PT">
+                  <connectionPointIn>
+                    <connection refLocalId="30000000004" />
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables />
+              <outputVariables>
+                <variable formalParameter="Q">
+                  <connectionPointOut />
+                </variable>
+                <variable formalParameter="ET">
+                  <connectionPointOut>
+                    <expression />
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                  <CallType xmlns="">functionblock</CallType>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                  <InputParamTypes xmlns="" />
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                  <OutputParamTypes xmlns="" />
+                </data>
+              </addData>
+            </block>
+            <outVariable localId="30000000006">
+              <position x="0" y="0" />
+              <connectionPointIn>
+                <connection refLocalId="30000000005" formalParameter="Q" />
+              </connectionPointIn>
+              <expression>xFault</expression>
+            </outVariable>
+            <inVariable localId="40000000000">
+              <position x="0" y="0" />
+              <connectionPointOut />
+              <expression>xOpen</expression>
+            </inVariable>
+            <inVariable localId="40000000001">
+              <position x="0" y="0" />
+              <connectionPointOut />
+              <expression>xFbOpen</expression>
+            </inVariable>
+            <block localId="40000000002" typeName="NOT">
+              <position x="0" y="0" />
+              <inputVariables>
+                <variable formalParameter="In1">
+                  <connectionPointIn>
+                    <connection refLocalId="40000000001" />
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables />
+              <outputVariables>
+                <variable formalParameter="Out1">
+                  <connectionPointOut />
+                </variable>
+              </outputVariables>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                  <CallType xmlns="">operator</CallType>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                  <InputParamTypes xmlns="" />
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                  <OutputParamTypes xmlns="" />
+                </data>
+              </addData>
+            </block>
+            <block localId="40000000003" typeName="AND">
+              <position x="0" y="0" />
+              <inputVariables>
+                <variable formalParameter="In1">
+                  <connectionPointIn>
+                    <connection refLocalId="40000000000" />
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="In2">
+                  <connectionPointIn>
+                    <connection refLocalId="40000000002" formalParameter="Out1" />
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables />
+              <outputVariables>
+                <variable formalParameter="Out1">
+                  <connectionPointOut />
+                </variable>
+              </outputVariables>
+              <addData>
+                <data name="http://www.3s-software.com/plcopenxml/fbdcalltype" handleUnknown="implementation">
+                  <CallType xmlns="">operator</CallType>
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/inputparamtypes" handleUnknown="implementation">
+                  <InputParamTypes xmlns="" />
+                </data>
+                <data name="http://www.3s-software.com/plcopenxml/outputparamtypes" handleUnknown="implementation">
+                  <OutputParamTypes xmlns="" />
+                </data>
+              </addData>
+            </block>
+            <outVariable localId="40000000004">
+              <position x="0" y="0" />
+              <connectionPointIn>
+                <connection refLocalId="40000000003" formalParameter="Out1" />
+              </connectionPointIn>
+              <expression>xMonitor</expression>
+            </outVariable>
+          </FBD>
+        </body>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+            <InterfaceAsPlainText>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml">// Команда клапана: блокировка возвращает без изменений; задержка контроля обратной связи — TON
+FUNCTION_BLOCK FB_ValveCmd
+VAR_INPUT
+    xOpenCmd : BOOL;
+    xCloseCmd : BOOL;
+    xInterlock : BOOL;
+    xFbOpen : BOOL;
+END_VAR
+VAR_OUTPUT
+    xOpen : BOOL;
+    xFault : BOOL;
+    xMonitor : BOOL;
+END_VAR
+VAR
+    fbState : SR;
+    fbFbDelay : TON;
+END_VAR
+</xhtml>
+            </InterfaceAsPlainText>
+          </data>
+        </addData>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations />
+  </instances>
+</project>

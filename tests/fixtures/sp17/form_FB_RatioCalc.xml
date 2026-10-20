@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0200">
+  <fileHeader companyName="" productName="CODESYS" productVersion="CODESYS V3.5 SP17 Patch 3" creationDateTime="2026-10-20T08:10:10.2605067" />
+  <contentHeader name="udr1.project" modificationDateTime="1601-01-01T03:00:00">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+    <addData>
+      <data name="http://www.3s-software.com/plcopenxml/projectinformation" handleUnknown="implementation">
+        <ProjectInformation />
+      </data>
+    </addData>
+  </contentHeader>
+  <types>
+    <dataTypes />
+    <pous>
+      <pou name="FB_RatioCalc" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="rFlowA">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="rRatio">
+              <type>
+                <REAL />
+              </type>
+              <initialValue>
+                <simpleValue value="0.02" />
+              </initialValue>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                <InterfaceAsPlainText>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">// Уставка расхода реагента по соотношению с фильтром: вход от блока с бо́льшим номером — прошлый цикл
+FUNCTION_BLOCK FB_RatioCalc
+VAR_INPUT
+    rFlowA : REAL;
+    rRatio : REAL := 0.02;
+END_VAR
+VAR_OUTPUT
+    rFlowBSp : REAL;
+    rFilt : REAL;
+END_VAR
+</xhtml>
+                </InterfaceAsPlainText>
+              </data>
+            </addData>
+          </inputVars>
+          <outputVars>
+            <variable name="rFlowBSp">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <variable name="rFilt">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                <InterfaceAsPlainText>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">// Уставка расхода реагента по соотношению с фильтром: вход от блока с бо́льшим номером — прошлый цикл
+FUNCTION_BLOCK FB_RatioCalc
+VAR_INPUT
+    rFlowA : REAL;
+    rRatio : REAL := 0.02;
+END_VAR
+VAR_OUTPUT
+    rFlowBSp : REAL;
+    rFilt : REAL;
+END_VAR
+</xhtml>
+                </InterfaceAsPlainText>
+              </data>
+            </addData>
+          </outputVars>
+          <documentation>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml"> Уставка расхода реагента по соотношению с фильтром: вход от блока с бо́льшим номером — прошлый цикл</xhtml>
+          </documentation>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml" />
+          </ST>
+          <addData>
+            <data name="http://www.3s-software.com/plcopenxml/cfc" handleUnknown="implementation">
+              <CFC page-oriented="true">
+                <inVariable localId="3">
+                  <position x="0" y="0" />
+                  <connectionPointOut>
+                    <expression />
+                  </connectionPointOut>
+                  <expression>rFlowA</expression>
+                </inVariable>
+                <connector localId="2" name="">
+                  <position x="0" y="0" />
+                  <connectionPointIn>
+                    <connection refLocalId="3" formalParameter="rFlowA" />
+                  </connectionPointIn>
+                </connector>
+                <inVariable localId="5">
+                  <position x="0" y="0" />
+                  <connectionPointOut>
+                    <expression />
+                  </connectionPointOut>
+                  <expression>rRatio</expression>
+                </inVariable>
+                <connector localId="4" name="">
+                  <position x="0" y="0" />
+                  <connectionPointIn>
+                    <connection refLocalId="5" formalParameter="rRatio" />
+                  </connectionPointIn>
+                </connector>
+                <block localId="1" executionOrderId="1" typeName="MUL">
+                  <position x="0" y="0" />
+                  <inputVariables>
+                    <variable formalParameter="In1">
+                      <connectionPointIn>
+                        <relPosition x="0" y="0" />
+                        <connection refLocalId="2" />
+                      </connectionPointIn>
+                    </variable>
+                    <variable formalParameter="In2">
+                      <connectionPointIn>
+                        <relPosition x="0" y="1" />
+                        <connection refLocalId="4" />
+                      </connectionPointIn>
+                    </variable>
+                  </inputVariables>
+                  <inOutVariables />
+                  <outputVariables>
+                    <variable formalParameter="Out1">
+                      <connectionPointOut>
+                        <relPosition x="0" y="0" />
+                        <expression />
+                      </connectionPointOut>
+                    </variable>
+                  </outputVariables>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/cfccalltype" handleUnknown="implementation">
+                      <CallType xmlns="">operator</CallType>
+                    </data>
+                  </addData>
+                </block>
+                <connector localId="0" name="">
+                  <position x="0" y="0" />
+                  <connectionPointIn>
+                    <connection refLocalId="1" formalParameter="" />
+                  </connectionPointIn>
+                </connector>
+                <connector localId="8" name="">
+                  <position x="0" y="0" />
+                  <connectionPointIn>
+                    <connection refLocalId="7" formalParameter="" />
+                  </connectionPointIn>
+                </connector>
+                <connector localId="13" name="">
+                  <position x="0" y="0" />
+                  <connectionPointIn>
+                    <connection refLocalId="1" formalParameter="" />
+                  </connectionPointIn>
+                </connector>
+                <connector localId="14" name="">
+                  <position x="0" y="0" />
+                  <connectionPointIn>
+                    <connection refLocalId="7" formalParameter="" />
+                  </connectionPointIn>
+                </connector>
+                <block localId="12" executionOrderId="2" typeName="SUB">
+                  <position x="0" y="0" />
+                  <inputVariables>
+                    <variable formalParameter="In1">
+                      <connectionPointIn>
+                        <relPosition x="0" y="0" />
+                        <connection refLocalId="13" />
+                      </connectionPointIn>
+                    </variable>
+                    <variable formalParameter="In2">
+                      <connectionPointIn>
+                        <relPosition x="0" y="1" />
+                        <connection refLocalId="14" />
+                      </connectionPointIn>
+                    </variable>
+                  </inputVariables>
+                  <inOutVariables />
+                  <outputVariables>
+                    <variable formalParameter="Out1">
+                      <connectionPointOut>
+                        <relPosition x="0" y="0" />
+                        <expression />
+                      </connectionPointOut>
+                    </variable>
+                  </outputVariables>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/cfccalltype" handleUnknown="implementation">
+                      <CallType xmlns="">operator</CallType>
+                    </data>
+                  </addData>
+                </block>
+                <connector localId="11" name="">
+                  <position x="0" y="0" />
+                  <connectionPointIn>
+                    <connection refLocalId="12" formalParameter="" />
+                  </connectionPointIn>
+                </connector>
+                <inVariable localId="16">
+                  <position x="0" y="0" />
+                  <connectionPointOut>
+                    <expression />
+                  </connectionPointOut>
+                  <expression>0.5</expression>
+                </inVariable>
+                <connector localId="15" name="">
+                  <position x="0" y="0" />
+                  <connectionPointIn>
+                    <connection refLocalId="16" formalParameter="0.5" />
+                  </connectionPointIn>
+                </connector>
+                <block localId="10" executionOrderId="3" typeName="MUL">
+                  <position x="0" y="0" />
+                  <inputVariables>
+                    <variable formalParameter="In1">
+                      <connectionPointIn>
+                        <relPosition x="0" y="0" />
+                        <connection refLocalId="11" />
+                      </connectionPointIn>
+                    </variable>
+                    <variable formalParameter="In2">
+                      <connectionPointIn>
+                        <relPosition x="0" y="1" />
+                        <connection refLocalId="15" />
+                      </connectionPointIn>
+                    </variable>
+                  </inputVariables>
+                  <inOutVariables />
+                  <outputVariables>
+                    <variable formalParameter="Out1">
+                      <connectionPointOut>
+                        <relPosition x="0" y="0" />
+                        <expression />
+                      </connectionPointOut>
+                    </variable>
+                  </outputVariables>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/cfccalltype" handleUnknown="implementation">
+                      <CallType xmlns="">operator</CallType>
+                    </data>
+                  </addData>
+                </block>
+                <connector localId="9" name="">
+                  <position x="0" y="0" />
+                  <connectionPointIn>
+                    <connection refLocalId="10" formalParameter="" />
+                  </connectionPointIn>
+                </connector>
+                <block localId="7" executionOrderId="4" typeName="ADD">
+                  <position x="0" y="0" />
+                  <inputVariables>
+                    <variable formalParameter="In1">
+                      <connectionPointIn>
+                        <relPosition x="0" y="0" />
+                        <connection refLocalId="8" />
+                      </connectionPointIn>
+                    </variable>
+                    <variable formalParameter="In2">
+                      <connectionPointIn>
+                        <relPosition x="0" y="1" />
+                        <connection refLocalId="9" />
+                      </connectionPointIn>
+                    </variable>
+                  </inputVariables>
+                  <inOutVariables />
+                  <outputVariables>
+                    <variable formalParameter="Out1">
+                      <connectionPointOut>
+                        <relPosition x="0" y="0" />
+                        <expression />
+                      </connectionPointOut>
+                    </variable>
+                  </outputVariables>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/cfccalltype" handleUnknown="implementation">
+                      <CallType xmlns="">operator</CallType>
+                    </data>
+                  </addData>
+                </block>
+                <connector localId="6" name="">
+                  <position x="0" y="0" />
+                  <connectionPointIn>
+                    <connection refLocalId="7" formalParameter="" />
+                  </connectionPointIn>
+                </connector>
+                <outVariable localId="17" executionOrderId="5">
+                  <position x="0" y="0" />
+                  <connectionPointIn>
+                    <relPosition x="0" y="0" />
+                    <connection refLocalId="6" />
+                  </connectionPointIn>
+                  <expression>rFilt</expression>
+                </outVariable>
+                <outVariable localId="18" executionOrderId="6">
+                  <position x="0" y="0" />
+                  <connectionPointIn>
+                    <relPosition x="0" y="0" />
+                    <connection refLocalId="0" />
+                  </connectionPointIn>
+                  <expression>rFlowBSp</expression>
+                </outVariable>
+              </CFC>
+            </data>
+          </addData>
+        </body>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+            <InterfaceAsPlainText>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml">// Уставка расхода реагента по соотношению с фильтром: вход от блока с бо́льшим номером — прошлый цикл
+FUNCTION_BLOCK FB_RatioCalc
+VAR_INPUT
+    rFlowA : REAL;
+    rRatio : REAL := 0.02;
+END_VAR
+VAR_OUTPUT
+    rFlowBSp : REAL;
+    rFilt : REAL;
+END_VAR
+</xhtml>
+            </InterfaceAsPlainText>
+          </data>
+        </addData>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations />
+  </instances>
+</project>
