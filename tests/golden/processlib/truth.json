@@ -1,0 +1,846 @@
+{
+ "source": "plc-process-lib@a321ad01f47eae4f5c29ed46d9764a2d738c2dd4",
+ "method": "чек-лист docs/RULES.md, регулярные выражения по исходникам с предками (EXTENDS)",
+ "rows": [
+  {
+   "rule": "MS-ST-03",
+   "pou": "",
+   "outcome": "auto",
+   "why": "проект: тело отдельно от объявлений"
+  },
+  {
+   "rule": "MS-EXEC-04",
+   "pou": "",
+   "outcome": "info",
+   "why": "проект: есть программа"
+  },
+  {
+   "rule": "MS-TYPE-05",
+   "pou": "",
+   "outcome": "info",
+   "why": "проект: есть массивы"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_AiAlarm",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_AiAlarm",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_AiFailValue",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_AiFailValue",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_AiInputType",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_AiInputType",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_AiSignalState",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_AiSignalState",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_AlarmEventReason",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_AlarmEventReason",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_AlarmPriority",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_AlarmPriority",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_AlarmState",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_AlarmState",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_CmdResult",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_CmdResult",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_CvAlarm",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_CvAlarm",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_CvFaultAction",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_CvFaultAction",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_DeviceMode",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_DeviceMode",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_DeviceType",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_DeviceType",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_DiAlarm",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_DiAlarm",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_DiFailValue",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_DiFailValue",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_MotorAlarm",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_MotorAlarm",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_MotorState",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_MotorState",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_Ne107Status",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_Ne107Status",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_PidAction",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_PidAction",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_PidAlarm",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_PidAlarm",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_PidPvFailAction",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_PidPvFailAction",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_ValveAlarm",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_ValveAlarm",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_ValveSafePos",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_ValveSafePos",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_ValveState",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_ValveState",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-TYPE-04",
+   "pou": "E_ValveType",
+   "outcome": "auto",
+   "why": "ENUM с базовым типом"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "E_ValveType",
+   "outcome": "verify",
+   "why": "ENUM с явными значениями"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_Alarm",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_Alarm",
+   "outcome": "manual",
+   "why": "itfTime : I_TimeSource — интерфейс реализуют 2 ФБ"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_Alarm",
+   "outcome": "manual",
+   "why": "itfTimeAct : I_TimeSource — интерфейс реализуют 2 ФБ"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_Alarm",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-ST-09",
+   "pou": "FB_Alarm",
+   "outcome": "info",
+   "why": "VAR_TEMP"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "FB_Alarm",
+   "outcome": "auto",
+   "why": "обращения к GVL_Lib"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "FB_Alarm",
+   "outcome": "verify",
+   "why": "литерал перечисления"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_AnalogInput",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-DECL-01",
+   "pou": "FB_AnalogInput",
+   "outcome": "verify",
+   "why": "VAR_IN_OUT"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_AnalogInput",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-ST-09",
+   "pou": "FB_AnalogInput",
+   "outcome": "info",
+   "why": "VAR_TEMP"
+  },
+  {
+   "rule": "MS-TYPE-09",
+   "pou": "FB_AnalogInput",
+   "outcome": "verify",
+   "why": "REAL_TO_<целое>"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "FB_AnalogInput",
+   "outcome": "auto",
+   "why": "обращения к GVL_Const"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "FB_AnalogInput",
+   "outcome": "verify",
+   "why": "литерал перечисления"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_ControlValve",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-DECL-01",
+   "pou": "FB_ControlValve",
+   "outcome": "verify",
+   "why": "VAR_IN_OUT"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_ControlValve",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-ST-09",
+   "pou": "FB_ControlValve",
+   "outcome": "info",
+   "why": "VAR_TEMP"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "FB_ControlValve",
+   "outcome": "auto",
+   "why": "обращения к GVL_Const"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "FB_ControlValve",
+   "outcome": "verify",
+   "why": "литерал перечисления"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_Delay",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_Delay",
+   "outcome": "manual",
+   "why": "itfTime : I_TimeSource — интерфейс реализуют 2 ФБ"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_Delay",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-ST-09",
+   "pou": "FB_Delay",
+   "outcome": "info",
+   "why": "VAR_TEMP"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_DeviceBase",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_DeviceBase",
+   "outcome": "manual",
+   "why": "itfTime : I_TimeSource — интерфейс реализуют 2 ФБ"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_DeviceBase",
+   "outcome": "manual",
+   "why": "itfTimeAct : I_TimeSource — интерфейс реализуют 2 ФБ"
+  },
+  {
+   "rule": "MS-DECL-01",
+   "pou": "FB_DeviceBase",
+   "outcome": "verify",
+   "why": "VAR_IN_OUT"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_DeviceBase",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "FB_DeviceBase",
+   "outcome": "auto",
+   "why": "обращения к GVL_Const"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "FB_DeviceBase",
+   "outcome": "verify",
+   "why": "литерал перечисления"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_DigitalInput",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-DECL-01",
+   "pou": "FB_DigitalInput",
+   "outcome": "verify",
+   "why": "VAR_IN_OUT"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_DigitalInput",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-ST-09",
+   "pou": "FB_DigitalInput",
+   "outcome": "info",
+   "why": "VAR_TEMP"
+  },
+  {
+   "rule": "MS-TYPE-09",
+   "pou": "FB_DigitalInput",
+   "outcome": "verify",
+   "why": "REAL_TO_<целое>"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "FB_DigitalInput",
+   "outcome": "auto",
+   "why": "обращения к GVL_Const"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "FB_DigitalInput",
+   "outcome": "verify",
+   "why": "литерал перечисления"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_FakeTime",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_FakeTime",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_LimitMonitor",
+   "outcome": "manual",
+   "why": "itfTime : I_TimeSource — интерфейс реализуют 2 ФБ"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_LimitMonitor",
+   "outcome": "manual",
+   "why": "itfTimeAct : I_TimeSource — интерфейс реализуют 2 ФБ"
+  },
+  {
+   "rule": "MS-ST-09",
+   "pou": "FB_LimitMonitor",
+   "outcome": "info",
+   "why": "VAR_TEMP"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_Motor",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-DECL-01",
+   "pou": "FB_Motor",
+   "outcome": "verify",
+   "why": "VAR_IN_OUT"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_Motor",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-ST-09",
+   "pou": "FB_Motor",
+   "outcome": "info",
+   "why": "VAR_TEMP"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "FB_Motor",
+   "outcome": "auto",
+   "why": "обращения к GVL_Const"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "FB_Motor",
+   "outcome": "verify",
+   "why": "литерал перечисления"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_MotorVfd",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-DECL-01",
+   "pou": "FB_MotorVfd",
+   "outcome": "verify",
+   "why": "VAR_IN_OUT"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_MotorVfd",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-ST-09",
+   "pou": "FB_MotorVfd",
+   "outcome": "info",
+   "why": "VAR_TEMP"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "FB_MotorVfd",
+   "outcome": "auto",
+   "why": "обращения к GVL_Const"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "FB_MotorVfd",
+   "outcome": "verify",
+   "why": "литерал перечисления"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_PID",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-DECL-01",
+   "pou": "FB_PID",
+   "outcome": "verify",
+   "why": "VAR_IN_OUT"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_PID",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-ST-09",
+   "pou": "FB_PID",
+   "outcome": "info",
+   "why": "VAR_TEMP"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "FB_PID",
+   "outcome": "auto",
+   "why": "обращения к GVL_Const"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "FB_PID",
+   "outcome": "verify",
+   "why": "литерал перечисления"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_StartsWindow",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_StartsWindow",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "FB_StartsWindow",
+   "outcome": "auto",
+   "why": "обращения к GVL_Const"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_SystemTime",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_SystemTime",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "FB_Valve",
+   "outcome": "review",
+   "why": "ФБ с методами/свойствами/EXTENDS → режим вызова"
+  },
+  {
+   "rule": "MS-DECL-01",
+   "pou": "FB_Valve",
+   "outcome": "verify",
+   "why": "VAR_IN_OUT"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "FB_Valve",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-ST-09",
+   "pou": "FB_Valve",
+   "outcome": "info",
+   "why": "VAR_TEMP"
+  },
+  {
+   "rule": "MS-TYPE-09",
+   "pou": "FB_Valve",
+   "outcome": "verify",
+   "why": "REAL_TO_<целое>"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "FB_Valve",
+   "outcome": "auto",
+   "why": "обращения к GVL_Const"
+  },
+  {
+   "rule": "MS-ST-04",
+   "pou": "FB_Valve",
+   "outcome": "verify",
+   "why": "литерал перечисления"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "F_IsFinite",
+   "outcome": "auto",
+   "why": "обращения к GVL_Const"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "F_LTimeToSec",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "F_LTimeToSec",
+   "outcome": "auto",
+   "why": "обращения к GVL_Const"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "F_TimeToSec",
+   "outcome": "auto",
+   "why": "обращения к GVL_Const"
+  },
+  {
+   "rule": "MS-DECL-04",
+   "pou": "GVL_Const",
+   "outcome": "review",
+   "why": "GVL CONSTANT"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "GVL_Const",
+   "outcome": "review",
+   "why": "LTIME/STRING(n) в GVL"
+  },
+  {
+   "rule": "MS-LANG-06",
+   "pou": "PRG_Main",
+   "outcome": "review",
+   "why": "вызовы методов экземпляров → режим вызова"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "PRG_Main",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)"
+  },
+  {
+   "rule": "MS-TYPE-02",
+   "pou": "ST_AlarmEvent",
+   "outcome": "review",
+   "why": "LTIME/STRING(n)/WSTRING в DUT"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "ST_AnalogInputCfg",
+   "outcome": "auto",
+   "why": "инициализация из GVL_Const"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "ST_ControlValveCfg",
+   "outcome": "auto",
+   "why": "инициализация из GVL_Const"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "ST_DigitalInputCfg",
+   "outcome": "auto",
+   "why": "инициализация из GVL_Const"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "ST_MotorCfg",
+   "outcome": "auto",
+   "why": "инициализация из GVL_Const"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "ST_PidCfg",
+   "outcome": "auto",
+   "why": "инициализация из GVL_Const"
+  },
+  {
+   "rule": "MS-ST-08",
+   "pou": "ST_ValveCfg",
+   "outcome": "auto",
+   "why": "инициализация из GVL_Const"
+  },
+  {
+   "rule": "MS-TYPE-03",
+   "pou": "U_RealBits",
+   "outcome": "manual",
+   "why": "DUT — UNION"
+  }
+ ]
+}
