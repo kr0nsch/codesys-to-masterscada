@@ -1,0 +1,56 @@
+# Дополнительные проверки с сетью: e2e демо (Playwright из Python) и кейс plc-process-lib по SHA.
+name: Extras
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    name: e2e демо
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.12"
+      - name: Зависимости
+        run: |
+          python -m pip install -e . playwright==1.64.0
+          python -m playwright install --with-deps chromium
+      - name: Сайт и e2e
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          python tools/build_site.py --out site
+          python tools/e2e_smoke.py --site site --shots build/e2e
+      - uses: actions/upload-artifact@v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: e2e-screenshots
+          path: build/e2e/
+          retention-days: 7
+
+  processlib:
+    name: кейс plc-process-lib (FP ≤ 5 % по truth.json)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: python -m pip install -r requirements-dev.txt -e .
+      - name: Клон по SHA и тесты кейса
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          python tools/fetch_processlib.py
+          python -m pytest tests/golden -q
