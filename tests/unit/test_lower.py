@@ -148,9 +148,8 @@ def test_ld_coil_chain_temp(root) -> None:  # type: ignore[no-untyped-def]
     import sys
 
     sys.path.insert(0, str(root / "tools" / "corpus"))
-    from tc6 import Graph, ld_body, pou, project
-
     from cds2ms import api
+    from tc6 import Graph, ld_body, pou, project
 
     g = Graph("LD", 1)
     r = g.rail()
@@ -195,9 +194,8 @@ def test_sfc_p0_p1(root) -> None:  # type: ignore[no-untyped-def]
     import sys
 
     sys.path.insert(0, str(root / "tools" / "corpus"))
-    from tc6 import Sfc, pou, project
-
     from cds2ms import api
+    from tc6 import Sfc, pou, project
 
     s = Sfc()
     a = s.step("A", None, initial=True)

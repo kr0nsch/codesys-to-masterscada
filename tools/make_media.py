@@ -32,8 +32,8 @@ sys.path.insert(0, str(KIT))
 
 def chart() -> None:
     import charts  # медиа-кит
-    from behaviour import case_series
 
+    from behaviour import case_series
     from cds2ms import api
 
     mig = api.migrate(api.load_path(ROOT / "corpus" / "udr1" / "source.cds.xml"))

@@ -58,7 +58,11 @@ ignore = [
 exclude = ["tools/codesys/cds_*_ide.py"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["cds2ms"]
+# Явная классификация: модули tools/ и корпуса — свои, медиа-кит портфолио — сторонний (иначе порядок зависит от окружения)
+known-first-party = ["cds2ms", "behaviour", "lock", "tc6", "sources", "build_corpus", "gen_scenarios", "rusty_check",
+                     "csc_check", "gen_stub", "ms4d_check", "gen_docs", "gen_rule_corpus", "fetch_xsd", "fetch_processlib",
+                     "processlib_truth", "corpus", "test_props"]
+known-third-party = ["charts", "shot", "brand", "pictograms", "playwright", "PIL", "hypothesis", "lxml", "jsonschema"]
 
 [tool.ruff.lint.pycodestyle]
 max-line-length = 140

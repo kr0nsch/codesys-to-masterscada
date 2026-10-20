@@ -40,9 +40,8 @@ sys.path.insert(0, str(ROOT / "corpus" / "udr1"))
 sys.path.insert(0, str(ROOT / "src"))
 import build_corpus  # noqa: E402
 import sources as S  # noqa: E402
-from lock import CdsError, runtime_lock  # noqa: E402
-
 from cds2ms.sim.runner import parse_value, read_csv, scenarios  # noqa: E402
+from lock import CdsError, runtime_lock  # noqa: E402
 
 CODESYS_EXE = os.environ.get("CODESYS_EXE", r"C:\Program Files (x86)\CODESYS 3.5.17.30\CODESYS\Common\CODESYS.exe")
 PROFILE = os.environ.get("CODESYS_PROFILE", "CODESYS V3.5 SP17 Patch 3")

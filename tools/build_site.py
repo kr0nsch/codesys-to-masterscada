@@ -25,7 +25,6 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "tools"))
 
 from behaviour import udr1_behaviour  # noqa: E402
-
 from cds2ms import api, web  # noqa: E402
 
 PYODIDE_VERSION = "314.0.7"
