@@ -1,0 +1,90 @@
+# cds2ms — перенос проектов CODESYS 3.5 в MasterSCADA 4D 1.3.10 / MasterPLC.
+# Ядро пакета — только стандартная библиотека Python (работает и в Pyodide); тест-линтер это проверяет.
+
+[project]
+name = "cds2ms"
+version = "0.1.0"
+description = "Перенос проектов CODESYS 3.5 (шесть языков МЭК 61131-3) в MasterSCADA 4D / MasterPLC: понижение в ST, правила, PLCopen XML, C#-скрипт, симулятор"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "kr0nsch" }]
+dependencies = []
+
+[project.scripts]
+cds2ms = "cds2ms.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+cds2ms = ["profiles/*.toml", "data/*.toml", "data/*.tsv", "data/*.txt", "schemas/*.json", "templates/*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["build", "out", "site", ".cache", "web/pyodide", "node_modules"]
+src = ["src", "tools", "tools/codesys"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "SIM", "C4", "RUF"]
+ignore = [
+    "RUF001", # кириллица в строках — не опечатка
+    "RUF002",
+    "RUF003",
+    "SIM102", # вложенные if в разборщике читаются лучше
+    "SIM108",
+    "SIM105", # try/except/pass короче contextlib.suppress в горячих местах интерпретатора
+    "E501",   # длину строк держит форматтер (120); длиннее — строковые литералы и таблицы
+    "RUF046", # int(round(...)): явное приведение оставлено для читаемости правил округления
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Скрипты CODESYS выполняются в IronPython 2.7: синтаксис Python 3 недоступен
+"tools/codesys/cds_*_ide.py" = ["UP", "SIM", "C4", "B904", "RUF005", "RUF012", "E501", "F821", "RUF100"]
+# Копия FileLock из s7-to-codesys @ 2285760 — без правок
+"tools/codesys/lock.py" = ["SIM115"]
+"tools/codesys/cdshost_cli.py" = ["E501", "SIM", "B904"]
+"tests/**/*.py" = ["E501"]
+"corpus/**/*.py" = ["E501"]
+"tools/corpus/*.py" = ["E501"]
+
+[tool.ruff.format]
+# Скрипты CODESYS (IronPython 2.7) форматтер не трогает
+exclude = ["tools/codesys/cds_*_ide.py"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["cds2ms"]
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 140
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src/cds2ms"]
+strict = true
+warn_unreachable = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tools", "."]
+addopts = "-ra --strict-markers"
+markers = [
+    "codesys: съёмка трасс и пробы в CODESYS 3.5.17.30 (только локально, под блокировкой рантайма)",
+    "ms4d: проверки с установленной MasterSCADA 4D 1.3.10 (сборка скрипта против настоящей сборки модели)",
+    "network: тест скачивает файл по SHA-256 в .cache/; без сети — пропуск",
+    "slow: долгие property-тесты",
+]
+
+[tool.coverage.run]
+source = ["cds2ms"]
+branch = true
+omit = ["*/cds2ms/__main__.py"]
+
+[tool.coverage.report]
+skip_covered = true
+show_missing = false

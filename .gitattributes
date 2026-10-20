@@ -1,0 +1,27 @@
+# Переводы строк нормализуются в LF; исключение — пакетные файлы Windows
+* text=auto eol=lf
+
+*.st    text eol=lf
+*.py    text eol=lf
+*.md    text eol=lf
+*.json  text eol=lf
+*.toml  text eol=lf
+*.yml   text eol=lf
+*.csv   text eol=lf
+*.cs    text eol=lf
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+
+# IEC 61131-3 ST GitHub Linguist относит к Smalltalk; ближайший по синтаксису — Pascal
+*.st    linguist-language=Pascal
+*.ST    linguist-language=Pascal
+
+# Экспорты CODESYS — байты как есть (BOM, CRLF среды)
+tests/fixtures/** -text
+corpus/**/source.cds.xml -text
+probe/import/P-IMP-05-codesys-raw.xml -text
+
+*.png   binary
+*.gif   binary
+*.zip   binary
+*.wasm  binary

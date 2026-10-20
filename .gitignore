@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.hypothesis/
+*.egg-info/
+.coverage
+coverage.xml
+htmlcov/
+
+# Сборка и выходы
+build/
+out/
+site/
+.cache/
+csharp/**/bin/
+csharp/**/obj/
+web/pyodide/
+web/cds2ms.zip
+node_modules/
+
+# CODESYS
+*.project
+*.projectarchive
+*.~u
+*.opt
+*.precompilecache
+*.compileinfo
+*.bootinfo
+*.bootinfo_guids
+*.backup
+
+# Редакторы и ОС
+.idea/
+.vscode/
+Thumbs.db
+Desktop.ini
+.DS_Store
