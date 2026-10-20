@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>cds2ms — перенос CODESYS в MasterSCADA 4D</title>
+  <meta name="description" content="Перенос проекта CODESYS 3.5 в MasterSCADA 4D / MasterPLC прямо в браузере: находки, Master ST, ручные шаги, zip">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="dot"></span>
+      <span class="eyebrow">МИГРАЦИЯ ПЛК · CODESYS → MASTERSCADA</span>
+    </div>
+    <h1>cds2ms <small>перенос проекта CODESYS 3.5 в MasterSCADA 4D / MasterPLC</small></h1>
+    <p class="lead">Всё считается в этой вкладке (Python в WebAssembly): файл никуда не отправляется. Тот же код, что у
+      командной строки <code>cds2ms migrate</code>.</p>
+  </header>
+
+  <main>
+    <section class="input card">
+      <div class="examples">
+        <span class="label">Примеры:</span>
+        <span id="examples"></span>
+      </div>
+      <label class="drop" id="drop">
+        <input type="file" id="file" accept=".xml,.zip,.json">
+        <span><b>Перетащите</b> экспорт PLCopen XML CODESYS 3.5 или zip с ST-раскладкой <code>src/POUs/…</code></span>
+      </label>
+      <div class="status" id="status">Загрузка среды Python…</div>
+    </section>
+
+    <section id="result" hidden>
+      <div class="summary card">
+        <div class="ring" id="ring"></div>
+        <div class="kpis" id="kpis"></div>
+      </div>
+
+      <nav class="tabs" id="tabs">
+        <button data-tab="pous" class="on">POU и код</button>
+        <button data-tab="langs">Языки</button>
+        <button data-tab="behaviour">Поведение</button>
+        <button data-tab="model">Модель MasterSCADA</button>
+        <button data-tab="matrix">Матрица</button>
+        <button data-tab="steps">Ручные шаги</button>
+        <button data-tab="zip">Скачать zip</button>
+      </nav>
+
+      <div class="tab card" id="tab-pous">
+        <div class="pou-layout">
+          <ul class="tree" id="tree"></ul>
+          <div class="code-pane">
+            <div class="code-head"><span id="pou-title"></span><span class="hint">слева — ST после понижения (original/), справа — Master ST (fixed/)</span></div>
+            <div class="code2">
+              <pre id="code-src"></pre>
+              <pre id="code-dst"></pre>
+            </div>
+            <div class="cards" id="cards"></div>
+          </div>
+        </div>
+      </div>
+      <div class="tab card" id="tab-langs" hidden></div>
+      <div class="tab card" id="tab-behaviour" hidden></div>
+      <div class="tab card" id="tab-model" hidden></div>
+      <div class="tab card" id="tab-matrix" hidden></div>
+      <div class="tab card" id="tab-steps" hidden><pre class="md" id="steps"></pre></div>
+      <div class="tab card" id="tab-zip" hidden></div>
+    </section>
+  </main>
+
+  <footer>
+    <a href="https://github.com/kr0nsch/codesys-to-masterscada">github.com/kr0nsch/codesys-to-masterscada</a> ·
+    MIT · Проект не связан с компаниями ОВЕН, Прософт-Системы, РегЛаб, ООО «ИЭК ДИДЖИТАЛ» и CODESYS GmbH; названия
+    продуктов — товарные знаки их владельцев.
+  </footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
