@@ -1,0 +1,5 @@
+scenario,cycle,t_ms,in.rIn:REAL,out.rOut:REAL,tol.rOut,boundary,comment
+Scale,1,0,1.5,4.5,0.001,FALSE,
+Scale,2,10,20.0,60.0,0.001,FALSE,
+Scale,3,20,40.0,100.0,0.001,FALSE,
+Scale,4,30,-2.0,0.0,0.001,FALSE,

@@ -1,0 +1,16 @@
+{
+  "format": "oracle-codesys/1",
+  "tool": "cds2ms tools/codesys/corpus.py",
+  "codesys": "3.5.17.30",
+  "device": "CODESYS Control Win V3 (4096 / 0000 0001 / 3.5.17.30)",
+  "runtime": "рантайм соседнего сеанса (не перезапускался)",
+  "date": "2026-10-20",
+  "source_sha256": "67b4e46aed09769b9ccf0090a7c9dce961f985a8e2f76c7b84f2a53ff6004ee6",
+  "task": "StandTask",
+  "period_ms": 10,
+  "cycles": 10,
+  "scenarios": [
+    "Filter"
+  ],
+  "pou": "FB_RatioCalc"
+}

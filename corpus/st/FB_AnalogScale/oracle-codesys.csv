@@ -1,0 +1,11 @@
+scenario,cycle,t_ms,in.iRaw:INT,in.rLo:REAL,in.rHi:REAL,out.rValue:REAL,out.xFault:BOOL
+Normal,1,0,0,0.0,120.0,0.0,FALSE
+Normal,2,10,13824,0.0,120.0,60.0,FALSE
+Normal,3,20,27648,0.0,120.0,120.0,FALSE
+Normal,4,30,6912,0.0,120.0,30.0,FALSE
+Normal,5,40,30000,0.0,120.0,30.0,TRUE
+Normal,6,51,-5,0.0,120.0,30.0,TRUE
+Normal,7,61,20736,0.0,120.0,90.0,FALSE
+Swapped,1,0,0,100.0,0.0,100.0,FALSE
+Swapped,2,10,27648,100.0,0.0,0.0,FALSE
+Swapped,3,20,13824,100.0,0.0,50.0,FALSE

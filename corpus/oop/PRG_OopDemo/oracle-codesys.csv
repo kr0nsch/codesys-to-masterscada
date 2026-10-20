@@ -1,0 +1,9 @@
+scenario,cycle,t_ms,in.xRun:BOOL,in.xStop:BOOL,out.rTotal_ml:REAL,out.iState:INT,out.rPumped_ml:REAL,out.iLoops:INT
+RunStop,1,0,FALSE,FALSE,0.0,0,0.0,3
+RunStop,2,10,TRUE,FALSE,0.25,1,2.0,3
+RunStop,3,20,FALSE,FALSE,0.5,1,2.5,0
+RunStop,4,30,FALSE,FALSE,0.75,1,3.0,0
+RunStop,5,40,FALSE,TRUE,0.75,0,3.0,0
+RunStop,6,51,FALSE,FALSE,0.75,0,3.0,0
+RunStop,7,61,TRUE,FALSE,1.0,1,3.5,0
+RunStop,8,71,TRUE,FALSE,1.25,1,4.0,0
